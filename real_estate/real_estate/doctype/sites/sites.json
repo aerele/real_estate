@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "field:site_name",
  "creation": "2020-09-14 12:33:23.086267",
  "doctype": "DocType",
@@ -43,7 +44,8 @@
    "options": "Real Estate Project"
   }
  ],
- "modified": "2020-09-14 13:40:45.988333",
+ "links": [],
+ "modified": "2020-09-14 16:32:28.349202",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Sites",
