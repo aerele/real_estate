@@ -1,5 +1,5 @@
 {
- "actions": [],
+ "autoname": "format:{YY}-{MM}-{project}-{site}",
  "creation": "2020-09-14 12:39:45.698931",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -11,8 +11,7 @@
   "customer_mobile_number",
   "agreement_number",
   "price",
-  "paid_amount",
-  "balance_amount",
+  "booking_payments",
   "payment_deadline",
   "is_booking_complete",
   "amended_from"
@@ -37,9 +36,8 @@
   },
   {
    "fieldname": "customer_mobile_number",
-   "fieldtype": "Int",
-   "label": "Customer Mobile Number",
-   "length": 10
+   "fieldtype": "Data",
+   "label": "Customer Mobile Number"
   },
   {
    "fieldname": "agreement_number",
@@ -50,16 +48,6 @@
    "fieldname": "price",
    "fieldtype": "Float",
    "label": "Price"
-  },
-  {
-   "fieldname": "paid_amount",
-   "fieldtype": "Float",
-   "label": "Paid Amount"
-  },
-  {
-   "fieldname": "balance_amount",
-   "fieldtype": "Read Only",
-   "label": "Balance Amount"
   },
   {
    "fieldname": "payment_deadline",
@@ -80,12 +68,18 @@
    "fieldname": "is_booking_complete",
    "fieldtype": "Check",
    "label": "Is Booking Complete",
-   "options": "0"
+   "options": "0",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booking_payments",
+   "fieldtype": "Table",
+   "label": "Booking Payments",
+   "options": "Site Booking Payments"
   }
  ],
  "is_submittable": 1,
- "links": [],
- "modified": "2020-09-14 14:37:00.829515",
+ "modified": "2020-09-14 18:42:26.185429",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",

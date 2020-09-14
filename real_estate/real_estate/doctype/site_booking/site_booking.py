@@ -7,15 +7,37 @@ import frappe
 from frappe.model.document import Document
 
 class SiteBooking(Document):
-	def before_save(self):
-		self.balance_amount = self.price - self.paid_amount
-
 	def on_submit(self):
-		a = frappe.get_doc('Sites', self.site)
-		a.price = self.price
-		if self.balance_amount == 0:
-			a.status = "Sold"	
+		site = frappe.get_doc('Sites', self.site)
+		site.price = self.price
+		if self.get_paid_amount == site.price:
+			site.status = "Sold"	
 		else:
-			a.status = "Booked"
-		a.save()
+			site.status = "Booked"
+		site.save()
+
+		is_existing_customer = frappe.db.exists('Thirumurugan Customer', {'mobile_number': self.customer_mobile_number})
+		if not is_existing_customer:
+			customer = frappe.new_doc('Thirumurugan Customer')
+			customer.customer_name = self.customer_name
+			customer.mobile_number = self.customer_mobile_number
+			customer.save()
+		
+		self.make_due_payment_entries()
+	
+	def get_paid_amount(self):
+		amount = 0
+		for payment in self.booking_payments:
+			amount += payment.amount
+		return amount
+
+	def make_due_payment_entries(self):
+		for payment_entry in self.booking_payments:
+			due = frappe.new_doc('Site Due Payment')
+			due.customer_mobile_number = self.customer_mobile_number
+			due.booking_id = self.name
+			due.paid_due_amount = payment_entry.amount
+			due.payment_made_on = frappe.utils.data.now_datetime()
+			due.save()
+			due.submit()
 
