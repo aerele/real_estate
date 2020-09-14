@@ -1,9 +1,11 @@
 {
+ "autoname": "format:PR-{DD}{MM}-{####}",
  "creation": "2020-09-14 12:42:51.692986",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "customer_mobile_number",
   "booking_id",
   "paid_due_amount",
   "payment_made_on",
@@ -18,13 +20,14 @@
   },
   {
    "fieldname": "paid_due_amount",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "label": "Paid Due Amount"
   },
   {
    "fieldname": "payment_made_on",
    "fieldtype": "Datetime",
-   "label": "Payment Made On"
+   "label": "Payment Made On",
+   "read_only": 1
   },
   {
    "fieldname": "amended_from",
@@ -34,10 +37,15 @@
    "options": "Site Due Payment",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "customer_mobile_number",
+   "fieldtype": "Data",
+   "label": "Customer Mobile Number"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-09-14 12:42:51.692986",
+ "modified": "2020-09-14 17:52:44.010617",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Due Payment",
