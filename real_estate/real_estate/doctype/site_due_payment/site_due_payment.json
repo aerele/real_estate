@@ -1,0 +1,63 @@
+{
+ "creation": "2020-09-14 12:42:51.692986",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "booking_id",
+  "paid_due_amount",
+  "payment_made_on",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "booking_id",
+   "fieldtype": "Link",
+   "label": "Booking ID",
+   "options": "Site Booking"
+  },
+  {
+   "fieldname": "paid_due_amount",
+   "fieldtype": "Data",
+   "label": "Paid Due Amount"
+  },
+  {
+   "fieldname": "payment_made_on",
+   "fieldtype": "Datetime",
+   "label": "Payment Made On"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Site Due Payment",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-09-14 12:42:51.692986",
+ "modified_by": "Administrator",
+ "module": "Real Estate",
+ "name": "Site Due Payment",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

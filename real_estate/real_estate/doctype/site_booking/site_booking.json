@@ -1,0 +1,109 @@
+{
+ "creation": "2020-09-14 12:39:45.698931",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "project",
+  "site",
+  "customer_name",
+  "customer_mobile_number",
+  "agreement_number",
+  "price",
+  "paid_amount",
+  "balance_amount",
+  "payment_deadline",
+  "is_booking_complete",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Real Estate Project"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "label": "Site",
+   "options": "Sites"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name"
+  },
+  {
+   "fieldname": "customer_mobile_number",
+   "fieldtype": "Int",
+   "label": "Customer Mobile Number",
+   "length": 10
+  },
+  {
+   "fieldname": "agreement_number",
+   "fieldtype": "Data",
+   "label": "Agreement Number"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Float",
+   "label": "Price"
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Float",
+   "label": "Paid Amount"
+  },
+  {
+   "fieldname": "balance_amount",
+   "fieldtype": "Float",
+   "label": "Balance Amount"
+  },
+  {
+   "fieldname": "payment_deadline",
+   "fieldtype": "Date",
+   "label": "Payment Deadline"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Site Booking",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_booking_complete",
+   "fieldtype": "Check",
+   "label": "Is Booking Complete",
+   "options": "0"
+  }
+ ],
+ "is_submittable": 1,
+ "modified": "2020-09-14 12:46:59.166498",
+ "modified_by": "Administrator",
+ "module": "Real Estate",
+ "name": "Site Booking",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
