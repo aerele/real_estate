@@ -1,7 +1,7 @@
 // Copyright (c) 2020, Aerele Technologies Private Limited and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Site Due Payment', {
+frappe.ui.form.on('Due Payment', {
 	onload: function(frm) {
 		frm.set_query("booking_id", function() {
 			return {

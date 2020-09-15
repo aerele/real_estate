@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "format:PR-{DD}{MM}-{####}",
  "creation": "2020-09-14 12:42:51.692986",
  "doctype": "DocType",
@@ -15,13 +16,17 @@
   {
    "fieldname": "booking_id",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Booking ID",
-   "options": "Site Booking"
+   "options": "Site Booking",
+   "reqd": 1
   },
   {
    "fieldname": "paid_due_amount",
    "fieldtype": "Float",
-   "label": "Paid Due Amount"
+   "in_list_view": 1,
+   "label": "Paid Due Amount",
+   "reqd": 1
   },
   {
    "fieldname": "payment_made_on",
@@ -34,21 +39,24 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Site Due Payment",
+   "options": "Due Payment",
    "print_hide": 1,
    "read_only": 1
   },
   {
    "fieldname": "customer_mobile_number",
    "fieldtype": "Data",
-   "label": "Customer Mobile Number"
+   "in_list_view": 1,
+   "label": "Customer Mobile Number",
+   "reqd": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2020-09-14 17:52:44.010617",
+ "links": [],
+ "modified": "2020-09-15 09:09:43.958579",
  "modified_by": "Administrator",
  "module": "Real Estate",
- "name": "Site Due Payment",
+ "name": "Due Payment",
  "owner": "Administrator",
  "permissions": [
   {
