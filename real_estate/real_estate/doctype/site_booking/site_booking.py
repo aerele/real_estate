@@ -15,13 +15,15 @@ class SiteBooking(Document):
 		else:
 			site.status = "Booked"
 		site.save()
-
-		is_existing_customer = frappe.db.exists('Thirumurugan Customer', {'mobile_number': self.customer_mobile_number})
-		if not is_existing_customer:
-			customer = frappe.new_doc('Thirumurugan Customer')
-			customer.customer_name = self.customer_name
-			customer.mobile_number = self.customer_mobile_number
-			customer.save()
+		if len(str(self.customer_mobile_number)) != 10:
+			frappe.throw('Enter the correct mobile number')
+		else:
+			is_existing_customer = frappe.db.exists('Customer', {'mobile_number': self.customer_mobile_number})
+			if not is_existing_customer:
+				customer = frappe.new_doc('Customer')
+				customer.customer_name = self.customer_name
+				customer.mobile_number = self.customer_mobile_number
+				customer.save()
 		
 		self.make_due_payment_entries()
 	
@@ -33,7 +35,7 @@ class SiteBooking(Document):
 
 	def make_due_payment_entries(self):
 		for payment_entry in self.booking_payments:
-			due = frappe.new_doc('Site Due Payment')
+			due = frappe.new_doc('Due Payment')
 			due.customer_mobile_number = self.customer_mobile_number
 			due.booking_id = self.name
 			due.paid_due_amount = payment_entry.amount
