@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-class RealEstateProject(Document):
+class Project(Document):
 	def validate(self):
 		if not self.site_serial:
 			self.site_serial = ''.join(self.project_name.split())

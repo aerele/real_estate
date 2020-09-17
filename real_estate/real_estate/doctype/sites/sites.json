@@ -41,11 +41,11 @@
    "fieldname": "real_estate_project",
    "fieldtype": "Link",
    "label": "Real Estate Project",
-   "options": "Real Estate Project"
+   "options": "Project"
   }
  ],
  "links": [],
- "modified": "2020-09-14 16:32:28.349202",
+ "modified": "2020-09-15 10:25:51.856938",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Sites",

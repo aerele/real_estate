@@ -39,7 +39,7 @@ class SiteBooking(Document):
 			due.customer_mobile_number = self.customer_mobile_number
 			due.booking_id = self.name
 			due.paid_due_amount = payment_entry.amount
-			due.payment_made_on = frappe.utils.data.now_datetime()
+			due.payment_made_on = payment_entry.date
 			due.save()
 			due.submit()
 
