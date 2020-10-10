@@ -1,11 +1,13 @@
 {
- "autoname": "format:{YY}-{MM}-{project}-{site}",
+ "actions": [],
+ "autoname": "format:{project}-{block}-{site}.",
  "creation": "2020-09-14 12:39:45.698931",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "project",
+  "block",
   "site",
   "customer_name",
   "customer_mobile_number",
@@ -21,13 +23,7 @@
    "fieldname": "project",
    "fieldtype": "Link",
    "label": "Project",
-   "options": "Real Estate Project"
-  },
-  {
-   "fieldname": "site",
-   "fieldtype": "Link",
-   "label": "Site",
-   "options": "Sites"
+   "options": "Project"
   },
   {
    "fieldname": "customer_name",
@@ -76,10 +72,21 @@
    "fieldtype": "Table",
    "label": "Booking Payments",
    "options": "Site Booking Payments"
+  },
+  {
+   "fieldname": "block",
+   "fieldtype": "Select",
+   "label": "Block"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Select",
+   "label": "Site"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-09-14 18:42:26.185429",
+ "links": [],
+ "modified": "2020-10-10 12:27:07.207332",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",

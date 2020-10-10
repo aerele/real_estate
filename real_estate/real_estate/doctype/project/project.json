@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "field:project_name",
  "creation": "2020-09-14 12:31:19.668953",
  "doctype": "DocType",
@@ -6,7 +7,9 @@
  "engine": "InnoDB",
  "field_order": [
   "project_name",
+  "enable_blocks",
   "number_of_sites",
+  "block_record",
   "site_serial"
  ],
  "fields": [
@@ -19,19 +22,34 @@
    "unique": 1
   },
   {
+   "depends_on": "eval:doc.enable_blocks==0",
    "fieldname": "number_of_sites",
    "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Number of Sites",
-   "reqd": 1
+   "label": "Number of Sites"
   },
   {
    "fieldname": "site_serial",
    "fieldtype": "Data",
    "label": "Site Serial"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "default": "0",
+   "fieldname": "enable_blocks",
+   "fieldtype": "Check",
+   "label": "Enable Blocks"
+  },
+  {
+   "depends_on": "eval:doc.enable_blocks==1",
+   "fieldname": "block_record",
+   "fieldtype": "Table",
+   "label": "Block Record",
+   "options": "Blocks"
   }
  ],
- "modified": "2020-09-14 13:22:45.243745",
+ "links": [],
+ "modified": "2020-10-08 19:14:11.847402",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Project",

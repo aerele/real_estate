@@ -5,12 +5,31 @@
 frappe.query_reports["Outstanding"] = {
 	"filters": [
 		{
-			"fieldname":"mobile",
-			"label": __("Mobile"),
+			"fieldname":"project",
+			"label": __("Project"),
 			"fieldtype": "Link",
-			"options": "Customer",
+			"options": "Project",
 			"reqd": 1,	
-			"width":1000
+		},
+
+		{
+			"fieldname":"block",
+			"label": __("Block"),
+			"fieldtype": "Link",
+			"options": "Project",
+			"reqd": 1,
+			get_query :() => {
+				var project = frappe.query_report.get_filter_value('project');
+				console.log("Inside get_blocks");
+				return {
+					freeze : true,
+					query : 'real_estate.real_estate.doctype.site_booking.site_booking.get_blocks_report',
+					filters : {
+						"project" : project,
+					}
+				}
+			},
+
 		},
 
 		{
@@ -20,14 +39,6 @@ frappe.query_reports["Outstanding"] = {
 			"options": "Site Booking",
 			"reqd": 1,
 			
-			get_query: () => {
-				var customer = frappe.query_report.get_filter_value('mobile');
-				return {
-					 filters: {
-					 'customer_mobile_number': customer.split('-')[1]
-					}
-				} 
-			}
 
 		}
 		

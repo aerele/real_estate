@@ -14,11 +14,23 @@ class Project(Document):
 
 	def after_insert(self):
 		present_sites = frappe.get_list('Sites', filters={'real_estate_project': self.project_name})
-		if len(present_sites) == 0:
-			for site_no in range(1, self.number_of_sites + 1):
-				site = frappe.new_doc('Sites')
-				site.real_estate_project = self.project_name
-				site.site_name = self.site_serial + '-' + str(site_no)
-				site.status = 'Open'
-				site.save()
-		
+		if self.enable_blocks == 1:
+			for block in self.block_record:				 
+				if len(present_sites) == 0:
+					for site_no in range(1, block.number_of_sites + 1):
+						site = frappe.new_doc('Sites')
+						site.real_estate_project = self.project_name
+						site.block_name = block.block_name
+						site.site_name = block.block_name+'-'+str(site_no)
+						site.status = 'Open'
+						site.save()
+		else:
+			if len(present_sites) == 0:
+					for site_no in range(1, self.number_of_sites + 1):
+						site = frappe.new_doc('Sites')
+						site.real_estate_project = self.project_name
+						site.site_name = 'Site -'+str(site_no)
+						site.status = 'Open'
+						site.save()
+
+
