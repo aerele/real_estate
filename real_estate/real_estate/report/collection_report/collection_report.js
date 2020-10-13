@@ -14,6 +14,18 @@ frappe.query_reports["collection report"] = {
 			label: __("To Date"),
 			fieldtype: "Date",
 			default: frappe.datetime.now_date(true)
+		},
+		{
+			fieldname:"user",
+			label: __("User"),
+			fieldtype: "Link",
+			options: "User",
+		},
+		{
+			fieldname:"site_name",
+			label: __("Site_name"),
+			fieldtype: "Link",
+			options : "Sites"
 		}
 
 

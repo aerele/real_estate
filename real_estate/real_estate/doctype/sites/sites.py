@@ -9,6 +9,6 @@ from frappe.model.naming import make_autoname
 
 class Sites(Document):
 	def on_cancel(self):
-		if self.status == 'Booked' or self.status == 'Sold':
+		if self.status == 'Sold':
 			frappe.throw('Can\'t deleted the site')
 
