@@ -25,7 +25,7 @@ frappe.query_reports["collection report"] = {
 			fieldname:"site_name",
 			label: __("Site_name"),
 			fieldtype: "Link",
-			options : "Sites"
+			options : "Site Booking"
 		}
 
 

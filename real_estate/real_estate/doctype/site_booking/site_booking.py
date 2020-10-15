@@ -53,7 +53,6 @@ def get_site(site_name):
 @frappe.whitelist()
 def get_blocks(project):
 	block = []
-	print('checkin get')
 	a = frappe.db.get_list('Sites',{'real_estate_project':project},['block_name'])
 	for temp in a:
 		block.append(temp['block_name'])
@@ -63,25 +62,19 @@ def get_blocks(project):
 @frappe.whitelist()
 def get_blocks_report(project):
 	block = []
-	print('checkin get')
-	# print(filters)
 	a = frappe.db.get_list('Sites',{'real_estate_project':project},['block_name'])
 	for temp in a:
 		block.append(temp['block_name'])
-	print(block)
 	return sorted(set(block))
 
 @frappe.whitelist()
-def get_sites(project,block):
+def get_sites_report(project,block):
 	sites = []
 	a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : block},['site_name'])
 	for temp in a:
 		sites.append(temp['site_name'])
 	return sorted(set(sites))
 
-@frappe.whitelist()
-def new_try(doctype, txt, searchfield, start, page_len, filters):
-	return frappe.db.sql("""select block_name from `tabSites` where real_estate_project='{0}'""".format(filters['project']))
-	
+
 
 
