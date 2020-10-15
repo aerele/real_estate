@@ -44,12 +44,13 @@ class SiteBooking(Document):
 			due.save()
 			due.submit()
 @frappe.whitelist()
-def get_site(site_name):
-	print(site_name)
-	site_name =  str(site_name)
-	a=frappe.db.get_all('Site Booking',{'name' : site_name},['customer_name','customer_mobile_number'])
-	print(a)
-	return a
+def get_sites(project,block):
+	site = []
+	print(project)
+	a = frappe.db.get_all('Sites',{'real_estate_project' : project,"block_name":block},["site_name"])
+	for data in a:
+		site.append(data["site_name"])
+	return sorted(set(site))
 @frappe.whitelist()
 def get_blocks(project):
 	block = []
@@ -70,9 +71,12 @@ def get_blocks_report(project):
 @frappe.whitelist()
 def get_sites_report(project,block):
 	sites = []
-	a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : block},['site_name'])
-	for temp in a:
-		sites.append(temp['site_name'])
+	print(block)
+	for data in block:
+		a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : data},['site_name'])
+		print(a)
+		for temp in a:
+			sites.append(temp['site_name'])
 	return sorted(set(sites))
 
 

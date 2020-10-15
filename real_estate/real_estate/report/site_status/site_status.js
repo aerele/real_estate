@@ -21,8 +21,16 @@ frappe.query_reports["Site Status"] = {
 					callback: function(r) {
 						console.log(r.message)
 						if(r.message) {
+							let status = r.message
+							let options = []
+							for (let option of status){
+								options.push({
+									"value":option,
+									"description":""
+								})
+							}
 							var block = frappe.query_report.get_filter('block');
-							block.df.options = r.message;
+							block.df.options = options;
 							block.refresh();
 						}
 					}
@@ -32,7 +40,7 @@ frappe.query_reports["Site Status"] = {
 		{
 			"fieldname":"block",
 			"label": __("Block"),
-			"fieldtype": "Select",
+			"fieldtype": "MultiSelectList",
 			"bold":1,
 		}
 

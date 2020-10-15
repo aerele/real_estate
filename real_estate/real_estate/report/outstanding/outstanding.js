@@ -23,8 +23,16 @@ frappe.query_reports["Outstanding"] = {
 					callback: function(r) {
 						console.log(r.message)
 						if(r.message) {
+							let status = r.message
+							let options = []
+							for(let option of status){
+								options.push({
+									"value":option,
+									"description":""
+								})
+							}
 							var block = frappe.query_report.get_filter('block');
-							block.df.options = r.message;
+							block.df.options = options;
 							block.refresh();
 						}
 					}
@@ -35,12 +43,13 @@ frappe.query_reports["Outstanding"] = {
 		{
 			"fieldname":"block",
 			"label": __("Block"),
-			"fieldtype": "Select",
-			"bold":1,
+			"fieldtype": "MultiSelectList",
+			
 			 on_change: () => {
 				console.log("inside block");
 				var project = frappe.query_report.get_filter_value('project');
 				var block = frappe.query_report.get_filter_value('block');
+				console.log(block)
 				frappe.call({
 					method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites_report',
 					freeze : true,
@@ -51,8 +60,16 @@ frappe.query_reports["Outstanding"] = {
 					callback: function(r) {
 						console.log(r.message)
 						if(r.message) {
+							let status = r.message
+							let options = []
+							for(let option of status){
+								options.push({
+									"value":option,
+									"description":""
+								})
+							}
 							var sites = frappe.query_report.get_filter('sites');
-							sites.df.options = r.message;
+							sites.df.options = options;
 							sites.refresh();
 						}
 					}
@@ -65,7 +82,7 @@ frappe.query_reports["Outstanding"] = {
 			
 			"fieldname":"sites",
 			"label": __("Sites"),
-			"fieldtype": "Select",
+			"fieldtype": "MultiSelectList",
 			"bold":1,
 
 		},
@@ -76,11 +93,6 @@ frappe.query_reports["Outstanding"] = {
 			"fieldtype": "Link",
 			"options":"Customer",
 			"bold":1,
-			on_change :() => {
-				frappe.query_report.set_filter_value('project',"");
-				frappe.query_report.set_filter_value('block',"");
-				frappe.query_report.set_filter_value('sites',"");
-			}
 			
 
 		}
