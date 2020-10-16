@@ -1,12 +1,12 @@
 {
  "actions": [],
- "autoname": "field:site_name",
  "creation": "2020-09-14 12:33:23.086267",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "real_estate_project",
+  "block_name",
   "site_name",
   "site_type",
   "price",
@@ -19,7 +19,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Site Name",
-   "unique": 1
+   "search_index": 1
   },
   {
    "fieldname": "site_type",
@@ -41,11 +41,16 @@
    "fieldname": "real_estate_project",
    "fieldtype": "Link",
    "label": "Real Estate Project",
-   "options": "Real Estate Project"
+   "options": "Project"
+  },
+  {
+   "fieldname": "block_name",
+   "fieldtype": "Data",
+   "label": "Block Name"
   }
  ],
  "links": [],
- "modified": "2020-09-14 16:32:28.349202",
+ "modified": "2020-10-09 08:51:19.937655",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Sites",

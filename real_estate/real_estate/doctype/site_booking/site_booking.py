@@ -8,7 +8,9 @@ from frappe.model.document import Document
 
 class SiteBooking(Document):
 	def on_submit(self):
-		site = frappe.get_doc('Sites', self.site)
+		site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
+		print(site_key)
+		site = frappe.get_doc('Sites',site_key)
 		site.price = self.price
 		if self.get_paid_amount == site.price:
 			site.status = "Sold"	
@@ -24,7 +26,6 @@ class SiteBooking(Document):
 				customer.customer_name = self.customer_name
 				customer.mobile_number = self.customer_mobile_number
 				customer.save()
-		
 		self.make_due_payment_entries()
 	
 	def get_paid_amount(self):
@@ -39,7 +40,45 @@ class SiteBooking(Document):
 			due.customer_mobile_number = self.customer_mobile_number
 			due.booking_id = self.name
 			due.paid_due_amount = payment_entry.amount
-			due.payment_made_on = frappe.utils.data.now_datetime()
+			due.payment_made_on = payment_entry.date
 			due.save()
 			due.submit()
+@frappe.whitelist()
+def get_sites(project,block):
+	site = []
+	print(project)
+	a = frappe.db.get_all('Sites',{'real_estate_project' : project,"block_name":block},["site_name"])
+	for data in a:
+		site.append(data["site_name"])
+	return sorted(set(site))
+@frappe.whitelist()
+def get_blocks(project):
+	block = []
+	a = frappe.db.get_list('Sites',{'real_estate_project':project},['block_name'])
+	for temp in a:
+		block.append(temp['block_name'])
+	print(block)
+	return sorted(set(block))
+
+@frappe.whitelist()
+def get_blocks_report(project):
+	block = []
+	a = frappe.db.get_list('Sites',{'real_estate_project':project},['block_name'])
+	for temp in a:
+		block.append(temp['block_name'])
+	return sorted(set(block))
+
+@frappe.whitelist()
+def get_sites_report(project,block):
+	sites = []
+	print(block)
+	for data in block:
+		a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : data},['site_name'])
+		print(a)
+		for temp in a:
+			sites.append(temp['site_name'])
+	return sorted(set(sites))
+
+
+
 
