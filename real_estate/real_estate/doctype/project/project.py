@@ -36,11 +36,11 @@ class Project(Document):
 						site.real_estate_project = self.project_name
 						site.block_name = "None"
 						site_name_ = str(site_no)
-						if(site_no > 9 and site_no < 100):
+						if(self.number_of_sites  > 9 and self.number_of_sites  < 100):
 							site_name_ = str(site_no).zfill(2)
-						if(site_no > 99 and site_no < 1000):
+						if(self.number_of_sites  > 99 and self.number_of_sites  < 1000):
 							site_name_ = str(site_no).zfill(3)
-						if(site_no > 9999 and site_no < 10000):
+						if(self.number_of_sites  > 9999 and self.number_of_sites  < 10000):
 							site_name_ = str(site_no).zfill(4)
 						site.site_name = site_name_
 						site.status = 'Open'
