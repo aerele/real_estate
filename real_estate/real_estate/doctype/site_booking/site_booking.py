@@ -17,7 +17,7 @@ class SiteBooking(Document):
 		print(site_key)
 		site = frappe.get_doc('Sites',site_key)
 		site.price = self.price
-		if self.get_paid_amount >= site.price:
+		if self.get_paid_amount() >= site.price:
 			site.status = "Sold"	
 		else:
 			site.status = "Booked"
