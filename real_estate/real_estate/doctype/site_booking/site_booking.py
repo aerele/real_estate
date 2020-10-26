@@ -8,21 +8,24 @@ from frappe.model.document import Document
 
 class SiteBooking(Document):
 	def on_submit(self):
-		site = frappe.get_doc('Sites', self.site)
+		site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
+		print(site_key)
+		site = frappe.get_doc('Sites',site_key)
 		site.price = self.price
 		if self.get_paid_amount == site.price:
 			site.status = "Sold"	
 		else:
 			site.status = "Booked"
 		site.save()
-
-		is_existing_customer = frappe.db.exists('Thirumurugan Customer', {'mobile_number': self.customer_mobile_number})
-		if not is_existing_customer:
-			customer = frappe.new_doc('Thirumurugan Customer')
-			customer.customer_name = self.customer_name
-			customer.mobile_number = self.customer_mobile_number
-			customer.save()
-		
+		if len(str(self.customer_mobile_number)) != 10:
+			frappe.throw('Enter the correct mobile number')
+		else:
+			is_existing_customer = frappe.db.exists('Customer', {'mobile_number': self.customer_mobile_number})
+			if not is_existing_customer:
+				customer = frappe.new_doc('Customer')
+				customer.customer_name = self.customer_name
+				customer.mobile_number = self.customer_mobile_number
+				customer.save()
 		self.make_due_payment_entries()
 	
 	def get_paid_amount(self):
@@ -33,11 +36,49 @@ class SiteBooking(Document):
 
 	def make_due_payment_entries(self):
 		for payment_entry in self.booking_payments:
-			due = frappe.new_doc('Site Due Payment')
+			due = frappe.new_doc('Due Payment')
 			due.customer_mobile_number = self.customer_mobile_number
 			due.booking_id = self.name
 			due.paid_due_amount = payment_entry.amount
-			due.payment_made_on = frappe.utils.data.now_datetime()
+			due.payment_made_on = payment_entry.date
 			due.save()
 			due.submit()
+@frappe.whitelist()
+def get_site(site_name):
+	print(site_name)
+	site_name =  str(site_name)
+	a=frappe.db.get_all('Site Booking',{'name' : site_name},['customer_name','customer_mobile_number'])
+	print(a)
+	return a
+@frappe.whitelist()
+def get_blocks(project):
+	block = []
+	print('checkin get')
+	print(filters)
+	a = frappe.db.get_list('Sites',{'real_estate_project':project},['block_name'])
+	for temp in a:
+		block.append(temp['block_name'])
+	print(block)
+	return sorted(set(block))
+
+@frappe.whitelist()
+def get_blocks_report(doctype, txt, searchfield, start, page_len, filters):
+	block = []
+	print('checkin get')
+	print(filters)
+	a = frappe.db.get_list('Sites',{'real_estate_project':filters['project']},['block_name'])
+	for temp in a:
+		block.append(temp['block_name'])
+	print(block)
+	return sorted(set(block))
+
+@frappe.whitelist()
+def get_sites(project,block):
+	sites = []
+	a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : block},['site_name'])
+	for temp in a:
+		sites.append(temp['site_name'])
+	return sorted(set(sites))
+	
+
 
