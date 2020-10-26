@@ -76,9 +76,11 @@
    "options": "Site Booking Payments"
   },
   {
+   "default": "None",
    "fieldname": "block",
    "fieldtype": "Select",
-   "label": "Block"
+   "label": "Block",
+   "options": "None"
   },
   {
    "fieldname": "site",
@@ -98,7 +100,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-23 09:14:52.737306",
+ "modified": "2020-10-26 15:15:33.038013",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",

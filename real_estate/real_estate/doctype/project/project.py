@@ -34,7 +34,8 @@ class Project(Document):
 					for site_no in range(1, self.number_of_sites + 1):
 						site = frappe.new_doc('Sites')
 						site.real_estate_project = self.project_name
-						site.site_name = 'Site -'+str(site_no)
+						site.block_name = "None"
+						site.site_name = str(site_no)
 						site.status = 'Open'
 						site.save()
 
