@@ -35,7 +35,13 @@ class Project(Document):
 						site = frappe.new_doc('Sites')
 						site.real_estate_project = self.project_name
 						site.block_name = "None"
-						site.site_name = str(site_no)
+						if(site_no > 9 and site_no < 100):
+							site_name_ = str(site_no).zfill(2)
+						if(site_no > 99 and site_no < 1000):
+							site_name_ = str(site_no).zfill(3)
+						if(site_no > 9999 and site_no < 10000):
+							site_name_ = str(site_no).zfill(4)
+						site.site_name = site_name_
 						site.status = 'Open'
 						site.save()
 
