@@ -4,15 +4,20 @@
 
 from __future__ import unicode_literals
 import frappe
+import datetime 
+from datetime import date, timedelta
 from frappe.model.document import Document
 
 class SiteBooking(Document):
+	def validate(self):
+		if(self.starting_date and self.number_of_weeks):
+			self.payment_deadline =  (datetime.datetime.strptime(str(self.starting_date ), "%Y-%m-%d") + datetime.timedelta(days = int(self.number_of_weeks)*7)).strftime("%d-%m-%Y")
 	def on_submit(self):
 		site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
 		print(site_key)
 		site = frappe.get_doc('Sites',site_key)
 		site.price = self.price
-		if self.get_paid_amount == site.price:
+		if self.get_paid_amount >= site.price:
 			site.status = "Sold"	
 		else:
 			site.status = "Booked"
@@ -43,11 +48,20 @@ class SiteBooking(Document):
 			due.payment_made_on = payment_entry.date
 			due.save()
 			due.submit()
+
+
+@frappe.whitelist()
+def set_detail_to_app(site_name):
+	a = frappe.db.get_value('Site Booking',{'name' : site_name },["customer_name","customer_mobile_number"])
+	return a
+
+
+
 @frappe.whitelist()
 def get_sites(project,block):
 	site = []
 	print(project)
-	a = frappe.db.get_all('Sites',{'real_estate_project' : project,"block_name":block},["site_name"])
+	a = frappe.db.get_all('Sites',{'real_estate_project' : project,"block_name":block ,"status" :"Open"},["site_name"])
 	for data in a:
 		site.append(data["site_name"])
 	return sorted(set(site))

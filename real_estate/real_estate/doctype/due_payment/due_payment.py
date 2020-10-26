@@ -44,3 +44,6 @@ def delete_due(user_id):
 	print(a)
 	return 'success'
 
+@frappe.whitelist()
+def user_validation():
+	return "success"

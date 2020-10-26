@@ -14,6 +14,8 @@
   "agreement_number",
   "price",
   "booking_payments",
+  "starting_date",
+  "number_of_weeks",
   "payment_deadline",
   "is_booking_complete",
   "amended_from"
@@ -47,7 +49,7 @@
   },
   {
    "fieldname": "payment_deadline",
-   "fieldtype": "Date",
+   "fieldtype": "Read Only",
    "label": "Payment Deadline"
   },
   {
@@ -82,11 +84,21 @@
    "fieldname": "site",
    "fieldtype": "Select",
    "label": "Site"
+  },
+  {
+   "fieldname": "starting_date",
+   "fieldtype": "Date",
+   "label": "Starting Date"
+  },
+  {
+   "fieldname": "number_of_weeks",
+   "fieldtype": "Data",
+   "label": "Number of Weeks"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-10 12:27:07.207332",
+ "modified": "2020-10-23 09:14:52.737306",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",
