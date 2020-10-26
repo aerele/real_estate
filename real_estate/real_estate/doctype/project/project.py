@@ -35,6 +35,7 @@ class Project(Document):
 						site = frappe.new_doc('Sites')
 						site.real_estate_project = self.project_name
 						site.block_name = "None"
+						site_name_ = str(site_no)
 						if(site_no > 9 and site_no < 100):
 							site_name_ = str(site_no).zfill(2)
 						if(site_no > 99 and site_no < 1000):
