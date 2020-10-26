@@ -25,8 +25,28 @@ frappe.ui.form.on('Site Booking', {
 				project: frm.doc.project,	
 			},
 			callback: function(r) {
+				
 				if(r.message) {
-					frm.set_df_property('block','options',r.message)
+					if(r.message.length > 1){
+						frm.set_df_property('block','options',r.message)
+					}
+					else{
+						frm.set_df_property('block','read_only',1)
+						frappe.call({
+							method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites',
+							freeze : true,
+							args : {
+								project: frm.doc.project,
+								block : "None"
+							},
+							callback : function(r){
+								if(r.message) {
+									frm.set_df_property('site','options',r.message)
+								}
+							}
+						})
+
+					}
 				}
 			}
 		});	

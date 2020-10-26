@@ -65,6 +65,8 @@ def get_sites(project,block):
 	for data in a:
 		site.append(data["site_name"])
 	return sorted(set(site))
+
+	
 @frappe.whitelist()
 def get_blocks(project):
 	block = []
