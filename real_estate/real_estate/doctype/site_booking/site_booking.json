@@ -100,13 +100,15 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-26 15:15:33.038013",
+ "modified": "2020-10-27 20:27:11.476198",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -116,6 +118,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

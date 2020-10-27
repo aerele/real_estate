@@ -53,13 +53,14 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-08 14:49:25.918635",
+ "modified": "2020-10-27 20:35:44.154636",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Due Payment",
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -69,18 +70,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Guest",
-   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
