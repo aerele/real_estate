@@ -53,13 +53,14 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-27 20:35:44.154636",
+ "modified": "2020-10-27 21:09:20.143835",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Due Payment",
  "owner": "Administrator",
  "permissions": [
   {
+   "amend": 1,
    "cancel": 1,
    "create": 1,
    "delete": 1,
