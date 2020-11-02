@@ -4,9 +4,7 @@
 frappe.ui.form.on('Site Booking', {
 
 	onload: function(frm) {
-		console.log('hick')
 		frm.set_query("site", function() {
-			console.log('hicking')
 			return {
 				filters: {
 					"real_estate_project": frm.doc.project,
@@ -16,8 +14,8 @@ frappe.ui.form.on('Site Booking', {
 			}
 		});
 	},
+
 	project : function(frm) {
-		console.log("Inside get_blocks")
 		frappe.call({
 			method: 'real_estate.real_estate.doctype.site_booking.site_booking.get_blocks',
 			freeze: true,
@@ -31,7 +29,11 @@ frappe.ui.form.on('Site Booking', {
 						frm.set_df_property('block','options',r.message)
 					}
 					else{
-						frm.set_df_property('block','read_only',1)
+						frm.set_df_property('block','options',"None")
+						frm.set_value('block',"None")
+						frm.set_df_property("block",'read_only',1)
+						
+						console.log("function called");
 						frappe.call({
 							method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites',
 							freeze : true,
@@ -41,7 +43,16 @@ frappe.ui.form.on('Site Booking', {
 							},
 							callback : function(r){
 								if(r.message) {
+									// frm.site.set_df_property('site','options',r.message,'site_name','Site Table',);
+									// var df = frappe.meta.get_docfield("Site Booking",'site',frm.doc.site_name);
+									// df.options = ["kavin","kumar"];
+									// console.log(df.options);
+									// console.log("everu");
+									// console.log(df);
+									// refresh_field("site");
 									frm.set_df_property('site','options',r.message)
+
+
 								}
 							}
 						})
@@ -52,7 +63,9 @@ frappe.ui.form.on('Site Booking', {
 		});	
 	},
 	block : function(frm) {
+		console.log("functioncall");
 		frappe.call({
+			
 			method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites',
 			freeze : true,
 			args : {
@@ -61,7 +74,14 @@ frappe.ui.form.on('Site Booking', {
 			},
 			callback : function(r){
 				if(r.message) {
+					// console.log(r.message);
+					// var df = frappe.meta.get_docfield("Site Booking", "site",frm.doc.site_name).options;
+					// df = r.message;
+					// console.log(df.options);
+					// refresh_field("site");
 					frm.set_df_property('site','options',r.message)
+
+					
 				}
 			}
 		})

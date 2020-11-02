@@ -9,9 +9,17 @@ from datetime import date, timedelta
 from frappe.model.document import Document
 
 class SiteBooking(Document):
+	def on_cancel(self):
+		site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
+		site = frappe.get_doc('Sites',site_key)
+		site.price = ""
+		site.status = "Open"
+		site.save()
+
 	def validate(self):
 		if(self.starting_date and self.number_of_weeks):
 			self.payment_deadline =  (datetime.datetime.strptime(str(self.starting_date ), "%Y-%m-%d") + datetime.timedelta(days = int(self.number_of_weeks)*7)).strftime("%d-%m-%Y")
+	
 	def on_submit(self):
 		site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
 		print(site_key)
@@ -22,6 +30,7 @@ class SiteBooking(Document):
 		else:
 			site.status = "Booked"
 		site.save()
+
 		if len(str(self.customer_mobile_number)) != 10:
 			frappe.throw('Enter the correct mobile number')
 		else:
@@ -88,8 +97,10 @@ def get_blocks_report(project):
 def get_sites_report(project,block):
 	sites = []
 	print(block)
+	print(len(block))
 	for data in block:
-		a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : data},['site_name'])
+		print(data)
+		a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : str(data)},['site_name'])
 		print(a)
 		for temp in a:
 			sites.append(temp['site_name'])
