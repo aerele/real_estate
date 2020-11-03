@@ -76,11 +76,9 @@
    "options": "Site Booking Payments"
   },
   {
-   "default": "None",
    "fieldname": "block",
    "fieldtype": "Select",
-   "label": "Block",
-   "options": "None"
+   "label": "Block"
   },
   {
    "fieldname": "site",
