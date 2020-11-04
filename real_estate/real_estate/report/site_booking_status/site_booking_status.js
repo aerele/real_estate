@@ -4,6 +4,14 @@
 
 frappe.query_reports["Site Booking Status"] = {
 	"filters": [
+		{	
+			"fieldname":"project",
+			"label": __("Project"),
+			"fieldtype": "Link",
+			"options": "Project",
+			"bold":1,
+			
+		}
 
 	]
 };
