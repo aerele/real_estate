@@ -1,5 +1,5 @@
 {
- "add_total_row": 0,
+ "add_total_row": 1,
  "columns": [],
  "creation": "2020-11-03 16:23:39.490820",
  "disable_prepared_report": 0,
@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2020-11-03 16:23:39.490820",
+ "modified": "2020-11-04 11:38:52.155984",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking Status",

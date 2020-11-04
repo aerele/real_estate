@@ -5,13 +5,13 @@ from __future__ import unicode_literals
 import frappe
 
 def execute(filters=None):
-	details = get_data()
+	details = get_data(filters)
 	columns, data = ["Booking_id","Project","Block","Site","Customer Name","Mobile number","Price","Due Amount","Balance","Starting Date","Weeks","Deadline"], details
 	return columns, data
 
-def get_data():
+def get_data(filters):
 	all_details = list(tuple())
-	site_booking_record = frappe.db.get_all("Site Booking",["name","project","block","site","customer_name","customer_mobile_number","price","starting_date","number_of_weeks","payment_deadline"])
+	site_booking_record = frappe.db.get_all("Site Booking",{"project":filters.project,"docstatus" : 1},["name","project","block","site","customer_name","customer_mobile_number","price","starting_date","number_of_weeks","payment_deadline","modified"])
 	for record in site_booking_record:
 		details = []
 		details.append(record["name"])
@@ -29,7 +29,7 @@ def get_data():
 		details.append(record["number_of_weeks"])
 		details.append(record["payment_deadline"])
 		all_details.append(details)
-	return all_details
+	return (sorted(all_details, key = lambda x: x[10]))
 
 def get_due(name):
 	due_record = frappe.db.get_all("Due Payment",{"booking_id":name},["paid_due_amount"])
