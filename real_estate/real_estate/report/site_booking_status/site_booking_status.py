@@ -6,7 +6,7 @@ import frappe
 
 def execute(filters=None):
 	details = get_data(filters)
-	columns, data = ["Booking_id","Project","Block","Site","Customer Name","Mobile number","Price","Due Amount","Balance","Starting Date","Weeks","Deadline"], details
+	columns, data = [{"fieldname":"Booking_id","width" : 200},{"fieldname":"Project","width" : 150},{"fieldname":"Block","width" : 150},{"fieldname":"Site","width" : 150},{"fieldname":"Customer Name","width" : 150},{"fieldname":"Mobile number","width" : 150},{"fieldname":"Price","width" : 150},{"fieldname":"Due Amount","width" : 150},{"fieldname":"Balance","width" : 150},{"fieldname":"Starting Date","width" : 150},{"fieldname":"Weeks","width" : 150},{"fieldname":"Deadline","width" : 150}], details
 	return columns, data
 
 def get_data(filters):
