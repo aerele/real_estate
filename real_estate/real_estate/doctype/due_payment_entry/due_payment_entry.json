@@ -1,0 +1,114 @@
+{
+ "actions": [],
+ "creation": "2020-11-05 20:10:14.716401",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "project",
+  "block",
+  "site",
+  "booking_id",
+  "customer_name",
+  "customer_mobile_number",
+  "price",
+  "due_amount",
+  "date",
+  "balance",
+  "deadline",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "block",
+   "fieldtype": "Select",
+   "label": "Block"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Select",
+   "label": "Site"
+  },
+  {
+   "fieldname": "customer_mobile_number",
+   "fieldtype": "Read Only",
+   "label": "Customer Mobile Number"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Read Only",
+   "label": "Price"
+  },
+  {
+   "fieldname": "due_amount",
+   "fieldtype": "Data",
+   "label": "Due Amount"
+  },
+  {
+   "fieldname": "balance",
+   "fieldtype": "Read Only",
+   "label": "Balance"
+  },
+  {
+   "fieldname": "deadline",
+   "fieldtype": "Read Only",
+   "label": "Deadline"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Due Payment Entry",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Read Only",
+   "label": "Customer Name"
+  },
+  {
+   "fieldname": "booking_id",
+   "fieldtype": "Read Only",
+   "label": "Booking Id"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-11-05 22:48:47.407902",
+ "modified_by": "Administrator",
+ "module": "Real Estate",
+ "name": "Due Payment Entry",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
