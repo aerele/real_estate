@@ -6,12 +6,12 @@ import frappe
 
 def execute(filters=None):
 	details = get_data(filters)
-	columns, data = [{"fieldname":"Booking_id","width" : 200},{"fieldname":"Project","width" : 150},{"fieldname":"Block","width" : 150},{"fieldname":"Site","width" : 150},{"fieldname":"Customer Name","width" : 150},{"fieldname":"Mobile number","width" : 150},{"fieldname":"Price","width" : 150},{"fieldname":"Due Amount","width" : 150},{"fieldname":"Balance","width" : 150},{"fieldname":"Starting Date","width" : 150},{"fieldname":"Weeks","width" : 150},{"fieldname":"Deadline","width" : 150}], details
+	columns, data = [{"fieldname":"Booking_id","width" : 250},{"fieldname":"Project","width" : 150},{"fieldname":"Block","width" : 80},{"fieldname":"Site","width" : 80},{"fieldname":"Customer Name","width" : 150},{"fieldname":"Mobile number","width" : 120},{"fieldname":"Price","width" : 80},{"fieldname":"Due Amount","width" : 80},{"fieldname":"Balance","width" : 80},{"fieldname":"Starting Date","width" : 120},{"fieldname":"Weeks","width" : 50},{"fieldname":"Deadline","width" : 90}], details
 	return columns, data
 
 def get_data(filters):
 	all_details = list(tuple())
-	site_booking_record = frappe.db.get_all("Site Booking",{"project":filters.project,"docstatus" : 1},["name","project","block","site","customer_name","customer_mobile_number","price","starting_date","number_of_weeks","payment_deadline","modified"])
+	site_booking_record = frappe.db.get_list("Site Booking",{"project":filters.project,"docstatus" : 1},["name","project","block","site","customer_name","customer_mobile_number","price","starting_date","number_of_weeks","payment_deadline"],order_by="modified asc")
 	for record in site_booking_record:
 		details = []
 		details.append(record["name"])
@@ -29,7 +29,7 @@ def get_data(filters):
 		details.append(record["number_of_weeks"])
 		details.append(record["payment_deadline"])
 		all_details.append(details)
-	return (sorted(all_details, key = lambda x: x[10]))
+	return all_details
 
 def get_due(name):
 	due_record = frappe.db.get_all("Due Payment",{"booking_id":name},["paid_due_amount"])

@@ -35,7 +35,6 @@ frappe.query_reports["collection report"] = {
 					"project" : project,
 					},
 					callback: function(r) {
-						console.log(r.message)
 						if(r.message) {
 							let status = r.message
 							let options = []
@@ -58,10 +57,8 @@ frappe.query_reports["collection report"] = {
 			label: __("Block"),
 			fieldtype: "MultiSelectList",
 			on_change: () => {
-				console.log("inside block");
 				var project = frappe.query_report.get_filter_value('project');
 				var block = frappe.query_report.get_filter_value('block');
-				console.log(block)
 				frappe.call({
 					method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites_report',
 					freeze : true,
@@ -70,7 +67,6 @@ frappe.query_reports["collection report"] = {
 					"block" : block
 					},
 					callback: function(r) {
-						console.log(r.message)
 						if(r.message) {
 							let status = r.message
 							let options = []

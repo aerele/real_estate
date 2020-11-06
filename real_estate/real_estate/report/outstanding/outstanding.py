@@ -9,16 +9,14 @@ def execute(filters=None):
 	print(filters)
 	if(filters.project and filters.block and filters.sites and not(filters.customer)):
 		details = get_details(filters)
-		columns, data = ["Customer","Mobile","Projects", "Sites", "Booking Id", "Due payment"], details
+		columns, data = [{"fieldname": "Customer", "width" : 150},{"fieldname": "Mobile", "width" : 120},{"fieldname": "Projects", "width" : 100}, {"fieldname": "Sites", "width" : 50}, {"fieldname": "Booking Id", "width" : 250}, {"fieldname": "Due payment", "width" : 80}], details
 		return columns, data
 	if(not filters.project and not filters.block and not filters.sites and filters.customer):
-		print("enter the cystinre")
 		details = get_customer_details(filters)
-		columns, data = ["Customer","Mobile","Projects", "Sites", "Booking Id", "Due payment"], details
+		columns, data = [{"fieldname": "Customer", "width" : 150},{"fieldname": "Mobile", "width" : 120},{"fieldname": "Projects", "width" : 100}, {"fieldname": "Sites", "width" : 50}, {"fieldname": "Booking Id", "width" : 250}, {"fieldname": "Due payment", "width" : 80}], details
 		return columns , data
-	print("etner the execute")
-	columns, data = ["Customer","Mobile","Projects", "Sites", "Booking Id", "Due payment"], []
-	return columns, data
+	return [],[]
+	
 def get_details(filters):
 	all_details = list(tuple())
 	for site in filters.sites:
@@ -35,22 +33,22 @@ def get_details(filters):
 				details.append(record["paid_due_amount"])
 				all_details.append(details)
 	return all_details
+
 def get_customer_details(filters):
 	all_details = list(tuple())
 	site_record =  frappe.db.get_all("Site Booking",{"customer_name":filters.customer.split("-")[0],"customer_mobile_number":filters.customer.split("-")[1]},["name"])
-	print(site_record)
 	for site in site_record:
+		name_array = site["name"].split("-")
 		details = []
 		due_record =  frappe.db.get_all("Due Payment",{"booking_id":site["name"]},["paid_due_amount"])
 		for record in due_record:
 			details.append(filters.customer.split("-")[0])
 			details.append(filters.customer.split("-")[1])
-			details.append(site["name"].split("-")[0])
-			details.append(site["name"].split("-")[2]+"-"+site["name"].split("-")[3])
+			details.append(name_array[0])
+			details.append(name_array[2])
 			details.append(site["name"])
 			details.append(record["paid_due_amount"])
 			all_details.append(details)
-	print(all_details)
 	return all_details
 
 
