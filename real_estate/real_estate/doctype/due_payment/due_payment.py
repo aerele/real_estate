@@ -9,18 +9,18 @@ from frappe.model.document import Document
 
 class DuePayment(Document):
 	def validate(self):
-		total = get_total(self.booking_id,self.paid_due_amount)
-		self.balance = self.price - total
+		total = get_total(self.booking_id)
+		self.balance = self.price - total - self.paid_due_amount
 
 
 
-def get_total(booking_id,amount):
-		initial = float(amount)
+
+def get_total(booking_id):
 		due_record = frappe.db.get_all("Due Payment",{"booking_id":booking_id},["paid_due_amount"])
-		print(due_record)
+		total = 0
 		for record in due_record:
-			initial += record["paid_due_amount"]
-		return initial
+			total += record["paid_due_amount"]
+		return total
 
 @frappe.whitelist()
 def get_customer_details(project,block,site):
