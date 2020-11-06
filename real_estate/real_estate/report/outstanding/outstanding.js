@@ -21,7 +21,6 @@ frappe.query_reports["Outstanding"] = {
 					"project" : project,
 					},
 					callback: function(r) {
-						console.log(r.message)
 						if(r.message) {
 							let status = r.message
 							let options = []
@@ -46,7 +45,6 @@ frappe.query_reports["Outstanding"] = {
 			"fieldtype": "MultiSelectList",
 			
 			 on_change: () => {
-				console.log("inside block");
 				var project = frappe.query_report.get_filter_value('project');
 				var block = frappe.query_report.get_filter_value('block');
 				console.log(block)
@@ -93,6 +91,15 @@ frappe.query_reports["Outstanding"] = {
 			"fieldtype": "Link",
 			"options":"Customer",
 			"bold":1,
+			on_load : () => {
+				var sites = frappe.query_report.get_filter('sites');
+				sites.df.options = null;
+				sites.refresh();
+				frm.set_value("project","");
+				frm.set_value("block","");
+				frm.set_value("site","");
+
+			}
 			
 
 		}

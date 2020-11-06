@@ -18,7 +18,8 @@
   "number_of_weeks",
   "payment_deadline",
   "is_booking_complete",
-  "amended_from"
+  "amended_from",
+  "serial"
  ],
  "fields": [
   {
@@ -94,11 +95,18 @@
    "fieldname": "number_of_weeks",
    "fieldtype": "Data",
    "label": "Number of Weeks"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "serial",
+   "fieldtype": "Data",
+   "label": "Serial",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-27 20:27:11.476198",
+ "modified": "2020-11-03 22:48:46.927591",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",

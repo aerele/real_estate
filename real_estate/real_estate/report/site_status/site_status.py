@@ -7,10 +7,10 @@ import frappe
 def execute(filters=None):
 	if (filters.project and filters.block):
 		details = get_status(filters)
-		columns, data = ["Project","Block","Sites","Status"], details
+		columns, data = [{"fieldname" : "Project", "width" : 150},{"fieldname" : "Block", "width" : 80},{"fieldname" : "Sites", "width" : 50},{"fieldname" : "Status", "width" : 80}], details
 		return columns, data
-	columns, data = [], []
-	return columns, data
+	return [], []
+	
 def get_status(filters):
 	all_details = list(tuple())
 	block = filters.block
