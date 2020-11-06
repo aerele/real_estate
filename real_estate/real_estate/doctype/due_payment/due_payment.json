@@ -6,33 +6,36 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "customer_mobile_number",
+  "project",
+  "block",
+  "site",
   "booking_id",
+  "customer_name",
+  "customer_mobile_number",
+  "price",
   "paid_due_amount",
   "payment_made_on",
+  "balance",
+  "deadline",
   "amended_from"
  ],
  "fields": [
   {
    "fieldname": "booking_id",
-   "fieldtype": "Link",
+   "fieldtype": "Read Only",
    "in_list_view": 1,
-   "label": "Booking ID",
-   "options": "Site Booking",
-   "reqd": 1
+   "label": "Booking ID"
   },
   {
    "fieldname": "paid_due_amount",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Paid Due Amount",
-   "reqd": 1
+   "label": "Paid Due Amount"
   },
   {
    "fieldname": "payment_made_on",
    "fieldtype": "Datetime",
-   "label": "Payment Made On",
-   "read_only": 1
+   "label": "Payment Made On"
   },
   {
    "fieldname": "amended_from",
@@ -45,15 +48,50 @@
   },
   {
    "fieldname": "customer_mobile_number",
-   "fieldtype": "Data",
+   "fieldtype": "Read Only",
    "in_list_view": 1,
-   "label": "Customer Mobile Number",
-   "reqd": 1
+   "label": "Customer Mobile Number"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "block",
+   "fieldtype": "Select",
+   "label": "Block"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Select",
+   "label": "Site"
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Read Only",
+   "label": "Customer Name"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Read Only",
+   "label": "Price"
+  },
+  {
+   "fieldname": "balance",
+   "fieldtype": "Read Only",
+   "label": "Balance"
+  },
+  {
+   "fieldname": "deadline",
+   "fieldtype": "Read Only",
+   "label": "Deadline"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-27 21:09:20.143835",
+ "modified": "2020-11-06 11:27:29.805874",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Due Payment",
@@ -75,7 +113,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
