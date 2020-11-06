@@ -9,8 +9,9 @@ from frappe.model.document import Document
 
 class DuePayment(Document):
 	def validate(self):
-		total = get_total(self.booking_id)
-		self.balance = (self.price - total) - self.paid_due_amount
+		# total = get_total(self.booking_id)
+		# self.balance = (self.price - total) - self.paid_due_amount
+		pass
 
 
 
