@@ -66,11 +66,9 @@ def set_detail_to_app(site_name):
 @frappe.whitelist()
 def get_sites_due_entry(project,block):
 	site = []
-	print(project,block)
 	a = frappe.db.get_all('Sites',{'real_estate_project' : project,"block_name":block ,"status" :"Agreement"},["site_name"])
 	for data in a:
 		site.append(data["site_name"])
-	print(site)
 	return sorted(set(site))
 
 
@@ -102,10 +100,15 @@ def get_blocks_report(project):
 @frappe.whitelist()
 def get_sites_report(project,block):
 	sites = []
-	for data in block:
-		a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : str(data)},['site_name'])
+	if (block == "None"):
+		a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : "None"},['site_name'])
 		for temp in a:
 			sites.append(temp['site_name'])
+	else:
+		for data in block:
+			a = frappe.db.get_list('Sites',{'real_estate_project':project,"block_name" : str(data)},['site_name'])
+			for temp in a:
+				sites.append(temp['site_name'])
 	return sorted(set(sites))
 
 @frappe.whitelist

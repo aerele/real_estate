@@ -6,15 +6,14 @@ import frappe
 
 def execute(filters=None):
 	details = []
-	print(filters)
 	if(filters.project and filters.block and filters.sites and not(filters.customer)):
 		details = get_details(filters)
-		columns, data = [{"fieldname": "Customer", "width" : 150},{"fieldname": "Mobile", "width" : 120},{"fieldname": "Projects", "width" : 100}, {"fieldname": "Sites", "width" : 50}, {"fieldname": "Booking Id", "width" : 250}, {"fieldname": "Due payment", "width" : 80}], details
-		return columns, data
+		columns = get_columns(filters)
+		return columns, details
 	if(not filters.project and not filters.block and not filters.sites and filters.customer):
 		details = get_customer_details(filters)
-		columns, data = [{"fieldname": "Customer", "width" : 150},{"fieldname": "Mobile", "width" : 120},{"fieldname": "Projects", "width" : 100}, {"fieldname": "Sites", "width" : 50}, {"fieldname": "Booking Id", "width" : 250}, {"fieldname": "Due payment", "width" : 80}], details
-		return columns , data
+		columns = get_columns(filters)
+		return columns , details
 	return [],[]
 	
 def get_details(filters):
@@ -50,6 +49,41 @@ def get_customer_details(filters):
 			details.append(record["paid_due_amount"])
 			all_details.append(details)
 	return all_details
+def get_columns(filters):
+	columns = [
+		{
+			"label": ("Customer"),
+			"fieldname": "customer",
+			"width": 150
+		},
+		{
+			"label": ("Mobile"),
+			"fieldname": "mobile",
+			"width": 100
+		},
+		{
+			"label": ("Projects"),
+			"fieldname": "projects",
+			"width": 150
+		},
+		{
+			"label": ("Sites"),
+			"fieldname": "sites",
+			"width": 80
+		},
+		{
+			"label": ("Booking Id"),
+			"fieldname": "booking_id",
+			"width": 250
+		},
+		{
+			"label": ("Due payment"),
+			"fieldname": "due_payment",
+			"width": 80
+		}
+	]
+	return columns
+
 
 
 	
