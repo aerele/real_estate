@@ -3,11 +3,34 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe import _, _dict
 
 def execute(filters=None):
 	if (filters.project and filters.block):
 		details = get_status(filters)
-		columns, data = [{"fieldname" : "Project", "width" : 150},{"fieldname" : "Block", "width" : 80},{"fieldname" : "Sites", "width" : 50},{"fieldname" : "Status", "width" : 80}], details
+		data = details
+		columns = [
+			{
+				"label": _("Project"),
+				"fieldname": "Project",
+				"width": 150
+			},
+			{
+				"label": _("Block"),
+				"fieldname": "Block",
+				"width": 80
+			},
+			{
+				"label": _("Sites"),
+				"fieldname": "Sites",
+				"width": 50
+			},
+			{
+				"label": _("Status"),
+				"fieldname": "Status",
+				"width": 80
+			}
+		]
 		return columns, data
 	return [], []
 	
