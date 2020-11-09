@@ -3,10 +3,73 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe import _, _dict
 
 def execute(filters=None):
 	details = get_data(filters)
-	columns, data = [{"fieldname":"Booking_id","width" : 250},{"fieldname":"Project","width" : 150},{"fieldname":"Block","width" : 80},{"fieldname":"Site","width" : 80},{"fieldname":"Customer Name","width" : 150},{"fieldname":"Mobile number","width" : 120},{"fieldname":"Price","width" : 80},{"fieldname":"Due Amount","width" : 80},{"fieldname":"Balance","width" : 80},{"fieldname":"Starting Date","width" : 120},{"fieldname":"Weeks","width" : 50},{"fieldname":"Deadline","width" : 90}], details
+	data = details
+	columns = [
+		{
+			"label": _("Bookind ID"),
+			"fieldname": "Booking_id",
+			"width": 250
+		},
+		{
+			"label": _("Project"),
+			"fieldname": "Project",
+			"width": 150
+		},
+		{
+			"label": _("Block"),
+			"fieldname": "Block",
+			"width": 80
+		},
+		{
+			"label": _("Site"),
+			"fieldname": "Site",
+			"width": 80
+		},
+		{
+			"label": _("Customer Name"),
+			"fieldname": "Customer Name",
+			"width": 150
+		},
+		{
+			"label": _("Mobile Number"),
+			"fieldname": "Mobile number",
+			"width": 120
+		},
+		{
+			"label": _("Price"),
+			"fieldname": "Price",
+			"width": 80
+		},
+		{
+			"label": _("Due Amount"),
+			"fieldname": "Due Amount",
+			"width": 80
+		},
+		{
+			"label": _("Balance"),
+			"fieldname": "Balance",
+			"width": 80
+		},
+		{
+			"label": _("Starting Date"),
+			"fieldname": "Starting Date",
+			"width": 120
+		},
+		{
+			"label": _("Weeks"),
+			"fieldname": "Weeks",
+			"width": 50
+		},
+		{
+			"label": _("Deadline"),
+			"fieldname": "Deadline",
+			"width": 90
+		}
+	]
 	return columns, data
 
 def get_data(filters):
