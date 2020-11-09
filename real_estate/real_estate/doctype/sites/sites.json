@@ -1,5 +1,4 @@
 {
- "actions": [],
  "creation": "2020-09-14 12:33:23.086267",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -35,7 +34,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Open\nBooked\nSold"
+   "options": "Open\nBooked\nSold\nAgreement"
   },
   {
    "fieldname": "real_estate_project",
@@ -49,9 +48,8 @@
    "label": "Block Name"
   }
  ],
- "links": [],
- "modified": "2020-10-22 15:44:30.908742",
- "modified_by": "Administrator",
+ "modified": "2020-11-09 11:59:51.994717",
+ "modified_by": "jayaraj@thirumurugan.com",
  "module": "Real Estate",
  "name": "Sites",
  "owner": "Administrator",

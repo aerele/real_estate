@@ -27,7 +27,7 @@ class SiteBooking(Document):
 		if self.get_paid_amount() >= site.price:
 			site.status = "Sold"	
 		else:
-			site.status = "Booked"
+			site.status = "Agreement"
 		site.save()
 		if len(str(self.customer_mobile_number)) != 10:
 			frappe.throw('Enter the correct mobile number')
@@ -67,7 +67,7 @@ def set_detail_to_app(site_name):
 def get_sites_due_entry(project,block):
 	site = []
 	print(project,block)
-	a = frappe.db.get_all('Sites',{'real_estate_project' : project,"block_name":block ,"status" :"Booked"},["site_name"])
+	a = frappe.db.get_all('Sites',{'real_estate_project' : project,"block_name":block ,"status" :"Agreement"},["site_name"])
 	for data in a:
 		site.append(data["site_name"])
 	print(site)
