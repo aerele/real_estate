@@ -49,6 +49,8 @@ class SiteBooking(Document):
 	def make_due_payment_entries(self):
 		for payment_entry in self.booking_payments:
 			due = frappe.new_doc('Due Payment')
+			due.customer_name = self.customer_name
+			due.price = self.price
 			due.customer_mobile_number = self.customer_mobile_number
 			due.booking_id = self.name
 			due.paid_due_amount = payment_entry.amount

@@ -37,7 +37,7 @@ frappe.query_reports["Outstanding"] = {
 							flag = true;
 						}
 						else{
-							frappe.query_report.set_filter_value('block',"None");
+							frappe.query_report.set_filter_value('block',r.message);
 						var project = frappe.query_report.get_filter_value('project');
 						frappe.call({
 							method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites_report',
