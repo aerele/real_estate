@@ -7,16 +7,16 @@ import frappe
 def execute(filters=None):
 	if filters.from_date and filters.to_date and filters.project and filters.block and filters.sites:
 		report_data = get_data_with_site(filters)
-		columns, data = [{'fieldname':'Customer Name', "width" : 120}, {'fieldname':'Mobile Number', "width" : 120}, {'fieldname':'Project', "width" : 150}, {'fieldname':'Site', "width" : 50}, {'fieldname':'Booking Id', "width" : 250}, {'fieldname':'Payment', "width" : 100}, {'fieldname':'Date', "width" : 80}], report_data
-		return columns, data
+		columns = get_columns(filters)
+		return columns, report_data
 	elif filters.from_date and filters.to_date and filters.user:
 		report_data = get_data_with_user(filters)
-		columns, data = [{'fieldname':'Customer Name', "width" : 120}, {'fieldname':'Mobile Number', "width" : 120}, {'fieldname':'Project', "width" : 150}, {'fieldname':'Site', "width" : 50}, {'fieldname':'Booking Id', "width" : 250}, {'fieldname':'Payment', "width" : 100}, {'fieldname':'Date', "width" : 80}], report_data
-		return columns, data
+		columns = get_columns(filters)
+		return columns, report_data
 	elif filters.from_date and filters.to_date:
 		report_data = get_data(filters)
-		columns, data = [{'fieldname':'Customer Name', "width" : 120}, {'fieldname':'Mobile Number', "width" : 120}, {'fieldname':'Project', "width" : 150}, {'fieldname':'Site', "width" : 50}, {'fieldname':'Booking Id', "width" : 250}, {'fieldname':'Payment', "width" : 100}, {'fieldname':'Date', "width" : 80}], report_data
-		return columns, data
+		columns = get_columns(filters)
+		return columns, report_data
 	else:
 		return [],[]
 
@@ -71,3 +71,43 @@ def get_data_with_user(filters):
 		row_details.append(record.payment_made_on.date())
 		data.append(row_details)
 	return data
+
+def get_columns(filters):
+	columns = [
+		{
+			"label": ("Customer Name"),
+			"fieldname": "customer_name",
+			"width": 120
+		},
+		{
+			"label": ("Mobile Number"),
+			"fieldname": "mobile_number",
+			"width": 120
+		},
+		{
+			"label": ("Project"),
+			"fieldname": "project",
+			"width": 150
+		},
+		{
+			"label": ("Site"),
+			"fieldname": "site",
+			"width": 50
+		},
+		{
+			"label": ("Bookind ID"),
+			"fieldname": "Booking_id",
+			"width": 250
+		},
+		{
+			"label": ("Payment"),
+			"fieldname": "payment",
+			"width": 100
+		},
+		{
+			"label": ("Date"),
+			"fieldname": "date",
+			"width": 80
+		}
+	]
+	return columns

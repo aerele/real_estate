@@ -1,0 +1,87 @@
+{
+ "actions": [],
+ "creation": "2020-11-17 12:37:15.782551",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "project",
+  "block",
+  "site",
+  "section_break_4",
+  "site_status",
+  "make_sold",
+  "section_break_8",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "block",
+   "fieldtype": "Select",
+   "label": "Block"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Select",
+   "label": "Site"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "site_status",
+   "fieldtype": "Select",
+   "label": "Site Status"
+  },
+  {
+   "fieldname": "make_sold",
+   "fieldtype": "Button",
+   "label": "Make Sold"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Site Purchase Confirmation",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2020-11-17 12:45:47.989953",
+ "modified_by": "Administrator",
+ "module": "Real Estate",
+ "name": "Site Purchase Confirmation",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

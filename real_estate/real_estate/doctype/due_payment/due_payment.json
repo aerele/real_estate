@@ -9,6 +9,7 @@
   "project",
   "block",
   "site",
+  "serial",
   "booking_id",
   "customer_name",
   "customer_mobile_number",
@@ -87,11 +88,16 @@
    "fieldname": "deadline",
    "fieldtype": "Read Only",
    "label": "Deadline"
+  },
+  {
+   "fieldname": "serial",
+   "fieldtype": "Read Only",
+   "label": "Serial"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-06 11:27:29.805874",
+ "modified": "2020-11-12 11:12:40.824750",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Due Payment",

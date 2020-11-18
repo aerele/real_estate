@@ -1,6 +1,7 @@
 // Copyright (c) 2016, Aerele Technologies Private Limited and contributors
 // For license information, please see license.txt
 /* eslint-disable */
+var flag;
 var  block_options = [];
 frappe.query_reports["Outstanding"] = {
 	
@@ -21,7 +22,7 @@ frappe.query_reports["Outstanding"] = {
 					"project" : project,
 					},
 					callback: function(r) {
-						if(r.message) {
+						if(r.message.length > 1) {
 							let status = r.message
 							let options = []
 							for(let option of status){
@@ -33,6 +34,38 @@ frappe.query_reports["Outstanding"] = {
 							var block = frappe.query_report.get_filter('block');
 							block.df.options = options;
 							block.refresh();
+							flag = true;
+						}
+						else{
+							frappe.query_report.set_filter_value('block',r.message);
+						var project = frappe.query_report.get_filter_value('project');
+						frappe.call({
+							method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites_report',
+							freeze : true,
+							args : {
+							"project" : project,
+							"block" : "None"
+							},
+							callback: function(r) {
+								console.log("upper hand")
+								console.log(r.message)
+								if(r.message) {
+									let status = r.message
+									let options = []
+									for(let option of status){
+										options.push({
+											"value":option,
+											"description":""
+										})
+									}
+									flag = false;
+									var sites = frappe.query_report.get_filter('sites');
+									sites.df.options = options;
+									sites.refresh();
+								}
+							}
+						});
+
 						}
 					}
 				});
@@ -45,33 +78,37 @@ frappe.query_reports["Outstanding"] = {
 			"fieldtype": "MultiSelectList",
 			
 			 on_change: () => {
-				var project = frappe.query_report.get_filter_value('project');
-				var block = frappe.query_report.get_filter_value('block');
-				console.log(block)
-				frappe.call({
-					method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites_report',
-					freeze : true,
-					args : {
-					"project" : project,
-					"block" : block
-					},
-					callback: function(r) {
-						console.log(r.message)
-						if(r.message) {
-							let status = r.message
-							let options = []
-							for(let option of status){
-								options.push({
-									"value":option,
-									"description":""
-								})
+				 if (flag == true){
+					var project = frappe.query_report.get_filter_value('project');
+					var block = frappe.query_report.get_filter_value('block');
+					frappe.call({
+						method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites_report',
+						freeze : true,
+						args : {
+						"project" : project,
+						"block" : block
+						},
+						callback: function(r) {
+							if(r.message) {
+								let status = r.message
+								let options = []
+								for(let option of status){
+									options.push({
+										"value":option,
+										"description":""
+									})
+								}
+								var sites = frappe.query_report.get_filter('sites');
+								sites.df.options = options;
+								sites.refresh();
 							}
-							var sites = frappe.query_report.get_filter('sites');
-							sites.df.options = options;
-							sites.refresh();
 						}
-					}
-				});
+					});
+
+				 }
+				 flag = true;
+				 
+				
 			}
 
 		},

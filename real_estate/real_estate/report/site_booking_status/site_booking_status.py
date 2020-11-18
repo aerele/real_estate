@@ -47,7 +47,7 @@ def execute(filters=None):
 		{
 			"label": _("Due Amount"),
 			"fieldname": "Due Amount",
-			"width": 80
+			"width": 100
 		},
 		{
 			"label": _("Balance"),
@@ -62,7 +62,7 @@ def execute(filters=None):
 		{
 			"label": _("Weeks"),
 			"fieldname": "Weeks",
-			"width": 50
+			"width": 80
 		},
 		{
 			"label": _("Deadline"),
