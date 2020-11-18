@@ -167,15 +167,15 @@ def set_serial_due_payment():
 	due_payment = frappe.db.get_all("Due Payment")
 	for booking_id in due_payment:
 		due_booking_doc = frappe.get_doc("Due Payment", booking_id['name'])
-		if not due_booking_doc.serial and  not booking_doc.docstatus == 2:
+		if not due_booking_doc.serial and  not due_booking_doc.docstatus == 2:
 			get_serial = frappe.db.get_value("Site Booking",{ "name" :due_booking_doc.booking_id},["serial"])
 			due_booking_doc.serial = get_serial
 			due_booking_doc.save()
-		if not due_booking_doc.customer_name and  not booking_doc.docstatus == 2:
+		if not due_booking_doc.customer_name and  not due_booking_doc.docstatus == 2:
 			get_customer = frappe.db.get_value("Site Booking",{"name" : due_booking_doc.booking_id},["customer_name"])
 			due_booking_doc.customer_name = get_customer
 			due_booking_doc.save()
-		if not due_booking_doc.price and  not booking_doc.docstatus == 2:
+		if not due_booking_doc.price and  not due_booking_doc.docstatus == 2:
 			get_price = frappe.db.get_value("Site Booking",{"name" : due_booking_doc.price},["price"])
 			due_booking_doc.price = get_price
 			due_booking_doc.save()
