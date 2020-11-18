@@ -1,9 +1,7 @@
 // Copyright (c) 2020, Aerele Technologies Private Limited and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Due Payment', {
-	onload: function(frm) {
-	},
+frappe.ui.form.on('Site Purchase Confirmation', {
 	project : function(frm) {
 		frappe.call({
 			method: 'real_estate.real_estate.doctype.site_booking.site_booking.get_blocks',
@@ -55,28 +53,45 @@ frappe.ui.form.on('Due Payment', {
 				}
 			}
 		})
-	}, 
+	},
 	site : function(frm) {
 		frappe.call({
-			method : 'real_estate.real_estate.doctype.due_payment.due_payment.get_customer_details',
+			method : 'real_estate.real_estate.doctype.site_purchase_confirmation.site_purchase_confirmation.get_site_status',
 			freeze : true,
-			args : {
-				project: frm.doc.project,
+			args :{
+				project : frm.doc.project,
 				block : frm.doc.block,
 				site : frm.doc.site
 			},
 			callback : function(r){
 				if(r.message){
-					
-					frm.set_value("serial",r.message[0])
-					frm.set_value("booking_id",r.message[1]);
-					frm.set_value("customer_name",r.message[2]);
-					frm.set_value("customer_mobile_number",r.message[3]);
-					frm.set_value("price",r.message[4]);
-					frm.set_value("deadline",r.message[5]);
+					frm.set_df_property('site_status','options',r.message)
+					frm.set_value("site_status",r.message)
+					frm.set_df_property("site_status","read_only",1)
 				}
 			}
-		})
 
+
+		});
+	},
+	
+	make_sold : function(frm) {
+		frappe.call({
+			method : 'real_estate.real_estate.doctype.site_purchase_confirmation.site_purchase_confirmation.set_site_status',
+			freeze : true,
+			args :{
+				project : frm.doc.project,
+				block : frm.doc.block,
+				site : frm.doc.site
+			},
+			callback : function(r){
+				if(r.message == "success"){
+					frm.set_value("site_status","Sold")
+				}
+			}
+
+
+		});
 	}
+
 });

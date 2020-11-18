@@ -88,7 +88,13 @@ frappe.query_reports["collection report"] = {
 			fieldname:"sites",
 			label: __("Sites"),
 			fieldtype: "MultiSelectList",
-		}
+		},
+		{
+			fieldname: "submit",
+			label: __("Button"),
+			fieldtype: "Button",
+			color : "blue"
+		},
 
 
 	]

@@ -6,28 +6,61 @@ from __future__ import unicode_literals
 import frappe
 import datetime 
 from datetime import date, timedelta
+from frappe.model.naming import make_autoname
 from frappe.model.document import Document
 
+
 class SiteBooking(Document):
+	def autoname(self):
+		if self.enable_mutiplesite == 1:
+			new_site = []
+			for site in self.sites:
+				new_site.append(site.sites)
+			new_site_name = ",".join(new_site)
+			self.site = str(new_site_name)
+		self.serial = make_autoname("YY.#####")
+
 	def on_cancel(self):
-		site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
-		site = frappe.get_doc('Sites',site_key)
-		site.price = ""
-		site.status = "Open"
-		site.save()
+		if self.enable_mutiplesite == 1:
+			split_site = self.site.split(",")
+			for _site in split_site:
+				site_doc = frappe.new_doc("Sites")
+				site_doc.real_estate_project = self.project
+				site_doc.block_name =  self.block
+				site_doc.site_name =  str(_site)
+				site_doc.save()
+			frappe.db.delete("Sites",{"real_estate_project" : self.project,'block_name':self.block,'site_name': self.site})
+		else:
+			site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
+			site = frappe.get_doc('Sites',site_key)
+			site.price = ""
+			site.status = "Open"
+			site.save()
 
 	def validate(self):
 		if(self.starting_date and self.number_of_weeks):
 			self.payment_deadline =  (datetime.datetime.strptime(str(self.starting_date ), "%Y-%m-%d") + datetime.timedelta(days = int(self.number_of_weeks)*7)).strftime("%d-%m-%Y")
-
+	
 	def on_submit(self):
+		if self.enable_mutiplesite == 1 :
+			new_site = []
+			for site in self.sites:
+				new_site.append(site.sites)
+			new_site_name = ",".join(new_site)
+			site_doc = frappe.new_doc("Sites")
+			site_doc.real_estate_project = self.project
+			site_doc.block_name =  self.block
+			site_doc.site_name =  str(new_site_name)
+			site_doc.save()
+			for _site in new_site:
+				frappe.db.delete("Sites",{"real_estate_project" : self.project,'block_name':self.block,'site_name': _site})
+
+		
+		
 		site_key =  frappe.get_value('Sites',{'real_estate_project' :self.project,'block_name':self.block,'site_name': self.site},['name'])
 		site = frappe.get_doc('Sites',site_key)
 		site.price = self.price
-		if self.get_paid_amount() >= site.price:
-			site.status = "Sold"	
-		else:
-			site.status = "Agreement"
+		site.status = "Agreement"
 		site.save()
 		if len(str(self.customer_mobile_number)) != 10:
 			frappe.throw('Enter the correct mobile number')
@@ -38,7 +71,10 @@ class SiteBooking(Document):
 				customer.customer_name = self.customer_name
 				customer.mobile_number = self.customer_mobile_number
 				customer.save()
+		
 		self.make_due_payment_entries()
+		
+		
 		
 	def get_paid_amount(self):
 		amount = 0
@@ -49,19 +85,21 @@ class SiteBooking(Document):
 	def make_due_payment_entries(self):
 		for payment_entry in self.booking_payments:
 			due = frappe.new_doc('Due Payment')
+			due.serial = self.serial
 			due.customer_name = self.customer_name
 			due.price = self.price
 			due.customer_mobile_number = self.customer_mobile_number
 			due.booking_id = self.name
 			due.paid_due_amount = payment_entry.amount
 			due.payment_made_on = payment_entry.date
+			due.deadline = self.payment_deadline
 			due.save()
 			due.submit()
 
 
 @frappe.whitelist()
 def set_detail_to_app(site_name):
-	a = frappe.db.get_value('Site Booking',{'name' : site_name },["customer_name","customer_mobile_number"])
+	a = frappe.db.get_value('Site Booking',{'serial' : site_name },["customer_name","customer_mobile_number"])
 	return a
 
 
@@ -113,16 +151,35 @@ def get_sites_report(project,block):
 				sites.append(temp['site_name'])
 	return sorted(set(sites))
 
-@frappe.whitelist
+
+@frappe.whitelist()
 def set_serial():
-		site_bookings = frappe.db.get_all("Site Booking")
-		for booking_id in site_bookings:
-			booking_doc = frappe.get_doc("Site Booking", booking_id)
-			if not booking_doc.serial:
-				booking_doc.serial = make_autoname("YY.#####")
-				booking_doc.save()
-				
-			
+	site_bookings = frappe.db.get_all("Site Booking")
+	for booking_id in site_bookings:
+		booking_doc = frappe.get_doc("Site Booking", booking_id['name'])
+		if not booking_doc.serial:
+			booking_doc.serial = make_autoname("YY.#####")
+			booking_doc.save()
+	return "success"
+
+@frappe.whitelist()
+def set_serial_due_payment():
+	due_payment = frappe.db.get_all("Due Payment")
+	for booking_id in due_payment:
+		due_booking_doc = frappe.get_doc("Due Payment", booking_id['name'])
+		if not due_booking_doc.serial:
+			get_serial = frappe.db.get_value("Site Booking",{ "name" :due_booking_doc.booking_id},["serial"])
+			due_booking_doc.serial = get_serial
+			due_booking_doc.save()
+		if not due_booking_doc.customer_name:
+			get_customer = frappe.db.get_value("Site Booking",{"name" : due_booking_doc.booking_id},["customer_name"])
+			due_booking_doc.customer_name = get_customer
+			due_booking_doc.save()
+		if not due_booking_doc.price:
+			get_price = frappe.db.get_value("Site Booking",{"name" : due_booking_doc.price},["price"])
+			due_booking_doc.price = get_price
+			due_booking_doc.save()
+	return "success"
 
 			
 

@@ -29,21 +29,24 @@ def get_total(booking_id):
 
 @frappe.whitelist()
 def get_customer_details(project,block,site):
-		customer_data = frappe.db.get_value("Site Booking",{"project" : project,"block" : block, "site" : site},["customer_name","customer_mobile_number","price","payment_deadline","name"]) 
+		customer_data = frappe.db.get_value("Site Booking",{"project" : project,"block" : block, "site" : site},["serial","name","customer_name","customer_mobile_number","price","payment_deadline"]) 
 		return customer_data
 
 @frappe.whitelist()
-def make_entry(booking_no,customer_name,mobile_no,paid_amount):
+def make_entry(serial,customer_name,mobile_no,paid_amount):
 	
 	due = frappe.new_doc('Due Payment')
 	due.customer_name = customer_name
-	site_price = frappe.db.get_value('Site Booking',{'name' : booking_no},['price'])
+	site_price = frappe.db.get_value('Site Booking',{'serial' : serial},['price'])
+	booking_no = frappe.db.get_value('Site Booking',{'serial': serial},['name'])
 	due.price = site_price
 	total = get_total(booking_no)
 	due.balance = (site_price - total) - float(paid_amount)
 	due.customer_mobile_number = mobile_no
 	due.booking_id = booking_no
+	due.serial = serial
 	due.paid_due_amount = paid_amount
+	due.deadline = frappe.db.get_value('Site Booking',{'serial':serial},['payment_deadline'])
 	due.payment_made_on = frappe.utils.data.now_datetime()
 	due.save()
 	due.submit()
@@ -53,7 +56,9 @@ def make_entry(booking_no,customer_name,mobile_no,paid_amount):
 def get_alluser(api):
 	user = frappe.db.get_value("User",{"api_key":api},["name"])
 	time = frappe.utils.nowdate()
-	a = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=',time],'modified_by': user },['booking_id','name','customer_name',	'customer_mobile_number','paid_due_amount'])
+	a = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=',time],'modified_by': user },['serial','booking_id','name','customer_name','customer_mobile_number','paid_due_amount'])
+	for temp in a:
+		temp['paid_due_amount'] = int(temp['paid_due_amount'])
 	return a 
 
 @frappe.whitelist()

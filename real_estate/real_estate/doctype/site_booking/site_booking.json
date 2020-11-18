@@ -9,6 +9,8 @@
   "project",
   "block",
   "site",
+  "enable_mutiplesite",
+  "sites",
   "customer_name",
   "customer_mobile_number",
   "agreement_number",
@@ -17,9 +19,9 @@
   "starting_date",
   "number_of_weeks",
   "payment_deadline",
+  "serial",
   "is_booking_complete",
-  "amended_from",
-  "serial"
+  "amended_from"
  ],
  "fields": [
   {
@@ -99,14 +101,26 @@
   {
    "allow_on_submit": 1,
    "fieldname": "serial",
-   "fieldtype": "Data",
-   "label": "Serial",
-   "read_only": 1
+   "fieldtype": "Read Only",
+   "label": "Serial"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_mutiplesite",
+   "fieldtype": "Check",
+   "label": "Enable Mutiplesite"
+  },
+  {
+   "depends_on": "eval:doc.enable_mutiplesite == 1",
+   "fieldname": "sites",
+   "fieldtype": "Table",
+   "label": "Sites",
+   "options": "Multi Site Table"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-03 22:48:46.927591",
+ "modified": "2020-11-18 00:31:21.959224",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",
