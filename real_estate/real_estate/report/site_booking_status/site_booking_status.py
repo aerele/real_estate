@@ -12,7 +12,14 @@ def execute(filters=None):
 		{
 			"label": _("Bookind ID"),
 			"fieldname": "Booking_id",
+			"fieldtype": "Link",
+			"options": "Site Booking",
 			"width": 250
+		},
+		{
+			"label": _("Serial"),
+			"fieldname": "serial",
+			"width": 100
 		},
 		{
 			"label": _("Project"),
@@ -74,10 +81,11 @@ def execute(filters=None):
 
 def get_data(filters):
 	all_details = list(tuple())
-	site_booking_record = frappe.db.get_list("Site Booking",{"project":filters.project,"docstatus" : 1},["name","project","block","site","customer_name","customer_mobile_number","price","starting_date","number_of_weeks","payment_deadline"],order_by="modified asc")
+	site_booking_record = frappe.db.get_list("Site Booking",{"project":filters.project,"docstatus" : 1},["name","serial","project","block","site","customer_name","customer_mobile_number","price","starting_date","number_of_weeks","payment_deadline"],order_by="modified asc")
 	for record in site_booking_record:
 		details = []
 		details.append(record["name"])
+		details.append(record["serial"])
 		details.append(record["project"])
 		details.append(record["block"])
 		details.append(record["site"])
