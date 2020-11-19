@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "format:PR-{DD}{MM}-{####}",
+ "autoname": "format:{YY}{MM}-{####}",
  "creation": "2020-09-14 12:42:51.692986",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -70,13 +70,11 @@
    "label": "Site"
   },
   {
-   "allow_on_submit": 1,
    "fieldname": "customer_name",
    "fieldtype": "Read Only",
    "label": "Customer Name"
   },
   {
-   "allow_on_submit": 1,
    "fieldname": "price",
    "fieldtype": "Read Only",
    "label": "Price"
@@ -92,7 +90,6 @@
    "label": "Deadline"
   },
   {
-   "allow_on_submit": 1,
    "fieldname": "serial",
    "fieldtype": "Read Only",
    "label": "Serial"
@@ -100,7 +97,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-18 13:15:55.456660",
+ "modified": "2020-11-19 11:40:39.583193",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Due Payment",
