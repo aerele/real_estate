@@ -19,7 +19,7 @@ def execute(filters=None):
 def get_details(filters):
 	all_details = list(tuple())
 	for site in filters.sites:
-		site_record = frappe.db.get_all("Site Booking",{"project":filters.project,"site":site},["customer_name","customer_mobile_number","name"])
+		site_record = frappe.db.get_all("Site Booking",{"project":filters.project,"site":site},["name","customer_name","customer_mobile_number","block"])
 		if(site_record):
 			due_record = frappe.db.get_all("Due Payment",{"booking_id": site_record[0]["name"]},["paid_due_amount"])
 			for record in due_record:
@@ -27,6 +27,7 @@ def get_details(filters):
 				details.append(site_record[0]["customer_name"])
 				details.append(site_record[0]["customer_mobile_number"])
 				details.append(filters.project)
+				details.append(site_record[0]["block"])
 				details.append(site)
 				details.append(site_record[0]["name"])
 				details.append(record["paid_due_amount"])
@@ -38,13 +39,15 @@ def get_customer_details(filters):
 	site_record =  frappe.db.get_all("Site Booking",{"customer_name":filters.customer.split("-")[0],"customer_mobile_number":filters.customer.split("-")[1]},["name"])
 	for site in site_record:
 		name_array = site["name"].split("-")
-		details = []
 		due_record =  frappe.db.get_all("Due Payment",{"booking_id":site["name"]},["paid_due_amount"])
 		for record in due_record:
+			details = []
 			details.append(filters.customer.split("-")[0])
 			details.append(filters.customer.split("-")[1])
 			details.append(name_array[0])
-			details.append(name_array[2])
+			details.append(name_array[1])
+			site_name = frappe.db.get_value("Site Booking",{"name" : str(site["name"])},["site"])
+			details.append(site_name)
 			details.append(site["name"])
 			details.append(record["paid_due_amount"])
 			all_details.append(details)
@@ -67,9 +70,14 @@ def get_columns(filters):
 			"width": 150
 		},
 		{
+			"label": ("Block"),
+			"fieldname": "block",
+			"width": 80
+		},
+		{
 			"label": ("Sites"),
 			"fieldname": "sites",
-			"width": 80
+			"width": 120
 		},
 		{
 			"label": ("Booking Id"),

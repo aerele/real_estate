@@ -23,7 +23,7 @@ def execute(filters=None):
 			{
 				"label": _("Sites"),
 				"fieldname": "Sites",
-				"width": 50
+				"width": 120
 			},
 			{
 				"label": _("Status"),

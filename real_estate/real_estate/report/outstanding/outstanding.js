@@ -2,7 +2,6 @@
 // For license information, please see license.txt
 /* eslint-disable */
 var flag;
-var  block_options = [];
 frappe.query_reports["Outstanding"] = {
 	
 	"filters": [
