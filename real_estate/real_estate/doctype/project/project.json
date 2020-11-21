@@ -49,7 +49,7 @@
   }
  ],
  "links": [],
- "modified": "2020-11-16 18:49:44.133349",
+ "modified": "2020-11-20 10:47:36.185192",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Project",
@@ -68,7 +68,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
