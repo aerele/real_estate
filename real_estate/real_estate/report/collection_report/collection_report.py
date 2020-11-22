@@ -45,7 +45,7 @@ def get_data_with_site(filters):
 	for site in filters.sites:
 		booking_id = frappe.db.get_value('Site Booking',{'project':filters.project , 'site':site },['name'])
 		if(booking_id):
-			records = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=', filters.from_date], 'payment_made_on': ['<=', filters.to_date] , 'booking_id': booking_id }, ["serial",'customer_mobile_number','paid_due_amount', 'payment_made_on'])
+			records = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=', '2020-11-22 00:00:00.000000'], 'payment_made_on': ['<=', '2020-11-23 00:00:00.000000']  , 'booking_id': booking_id }, ["serial",'customer_mobile_number','paid_due_amount', 'payment_made_on'])
 			for record in records:
 				row_details = []
 				customer = frappe.db.get_value('Customer',{'mobile_number': record.customer_mobile_number}, ['customer_name'])
@@ -63,7 +63,7 @@ def get_data_with_site(filters):
 	return data
 
 def get_data_with_user(filters):
-	records = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=', filters.from_date], 'payment_made_on': ['<=', filters.to_date] , "owner" : filters.user }, ['customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on'])
+	records = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=', '2020-11-22 00:00:00.000000'], 'payment_made_on': ['<=', '2020-11-23 00:00:00.000000'] , "owner" : filters.user }, ['customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on'])
 	data = list(tuple())
 	for record in records:
 		row_details = []
