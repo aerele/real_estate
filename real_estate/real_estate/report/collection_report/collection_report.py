@@ -21,7 +21,7 @@ def execute(filters=None):
 		return [],[]
 
 def get_data(filters):
-	records = frappe.db.get_all('Due Payment',{'payment_made_on': ['>', filters.from_date], 'payment_made_on': ['<', filters.to_date] }, ['serial','customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on'])
+	records = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=', '2020-11-22 00:00:00.000000'], 'payment_made_on': ['<=', '2020-11-23 00:00:00.000000'] }, ['serial','customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on'])
 	data = list(tuple())
 	for record in records:
 		row_details = []
