@@ -43,7 +43,7 @@ def get_data(filters):
 		row_details.append(site_name)
 		row_details.append(record.booking_id)
 		row_details.append(record.paid_due_amount)
-		row_details.append(record.payment_made_on.date())
+		# row_details.append(record.payment_made_on.date())
 		data.append(row_details)
 	return data
 
