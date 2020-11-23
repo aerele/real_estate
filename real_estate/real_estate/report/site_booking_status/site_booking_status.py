@@ -103,7 +103,7 @@ def get_data(filters):
 	return all_details
 
 def get_due(name):
-	due_record = frappe.db.get_all("Due Payment",{"booking_id":name},["paid_due_amount"])
+	due_record = frappe.db.get_all("Due Payment",{"booking_id":name,"docstatus":1},["paid_due_amount"])
 	amount = 0 
 	for record in due_record:
 		amount += record["paid_due_amount"]

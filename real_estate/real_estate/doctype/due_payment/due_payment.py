@@ -21,7 +21,7 @@ class DuePayment(Document):
 
 
 def get_total(booking_id):
-		due_record = frappe.db.get_all("Due Payment",{"booking_id":booking_id},["paid_due_amount"])
+		due_record = frappe.db.get_all("Due Payment",{"booking_id":booking_id,"docstatus":1},["paid_due_amount"])
 		total = 0
 		for record in due_record:
 			total += record["paid_due_amount"]
@@ -56,7 +56,7 @@ def make_entry(serial,customer_name,mobile_no,paid_amount):
 def get_alluser(api):
 	user = frappe.db.get_value("User",{"api_key":api},["name"])
 	time = frappe.utils.nowdate()
-	a = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=',time],'modified_by': user },['serial','booking_id','name','customer_name','customer_mobile_number','paid_due_amount'])
+	a = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=',time],'modified_by': user ,"docstatus" : 1},['serial','booking_id','name','customer_name','customer_mobile_number','paid_due_amount'])
 	for temp in a:
 		temp['paid_due_amount'] = int(temp['paid_due_amount'])
 	return a 
@@ -64,7 +64,8 @@ def get_alluser(api):
 @frappe.whitelist()
 def delete_due(user_id):
 	user_id = str(user_id)
-	frappe.db.delete('Due Payment',{'name' : str(user_id)})
+	currect_record =  frappe.get_doc("Due Payment",{'name':str(user_id)})
+	currect_record.cancel()
 	a = frappe.db.count('Due Payment')
 	return 'success'
 
