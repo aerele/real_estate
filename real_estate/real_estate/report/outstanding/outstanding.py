@@ -21,7 +21,7 @@ def get_details(filters):
 	for site in filters.sites:
 		site_record = frappe.db.get_all("Site Booking",{"project":filters.project,"site":site},["name","customer_name","customer_mobile_number","block"])
 		if(site_record):
-			due_record = frappe.db.get_all("Due Payment",{"booking_id": site_record[0]["name"]},["paid_due_amount"])
+			due_record = frappe.db.get_all("Due Payment",{"booking_id": site_record[0]["name"],"docstatus":1},["paid_due_amount"])
 			for record in due_record:
 				details = []
 				details.append(site_record[0]["customer_name"])
@@ -39,7 +39,7 @@ def get_customer_details(filters):
 	site_record =  frappe.db.get_all("Site Booking",{"customer_name":filters.customer.split("-")[0],"customer_mobile_number":filters.customer.split("-")[1]},["name"])
 	for site in site_record:
 		name_array = site["name"].split("-")
-		due_record =  frappe.db.get_all("Due Payment",{"booking_id":site["name"]},["paid_due_amount"])
+		due_record =  frappe.db.get_all("Due Payment",{"booking_id":site["name"],"docstatus":1},["paid_due_amount"])
 		for record in due_record:
 			details = []
 			details.append(filters.customer.split("-")[0])
