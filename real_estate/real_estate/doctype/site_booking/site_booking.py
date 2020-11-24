@@ -36,6 +36,7 @@ class SiteBooking(Document):
 			site.price = ""
 			site.status = "Open"
 			site.save()
+		# frappe.db.delete("Due Payment",{'serial' : self.serial})
 
 	def validate(self):
 		if(self.starting_date and self.number_of_weeks):
@@ -99,7 +100,8 @@ class SiteBooking(Document):
 
 @frappe.whitelist()
 def set_detail_to_app(site_name):
-	a = frappe.db.get_value('Site Booking',{'serial' : site_name },["customer_name","customer_mobile_number"])
+	a = frappe.db.get_value('Site Booking',{'serial' : site_name },["project","block","site","customer_name","customer_mobile_number"])
+	print(a)
 	return a
 
 
@@ -180,7 +182,14 @@ def set_serial_due_payment():
 			due_booking_doc.price = get_price
 			due_booking_doc.save()
 	return "success"
-
+@frappe.whitelist()
+def delete_unwanted_payments():
+	payments = frappe.db.get_all("Due Payment",["serial"])
+	for payment in payments:
+		is_present = frappe.db.get_value("Site Booking",{"serial" : payment.serial})
+		if is_present == None:
+			frappe.db.delete("Due Payment",{"serial":payment.serial})
+	return "completed"
 			
 
 

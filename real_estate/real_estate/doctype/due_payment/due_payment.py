@@ -56,10 +56,14 @@ def make_entry(serial,customer_name,mobile_no,paid_amount):
 def get_alluser(api):
 	user = frappe.db.get_value("User",{"api_key":api},["name"])
 	time = frappe.utils.nowdate()
-	a = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=',time],'modified_by': user ,"docstatus" : 1},['serial','booking_id','name','customer_name','customer_mobile_number','paid_due_amount'])
-	for temp in a:
-		temp['paid_due_amount'] = int(temp['paid_due_amount'])
-	return a 
+	all_due = frappe.db.get_all('Due Payment',{'payment_made_on': ['>=',time],'modified_by': user ,"docstatus" : 1},['serial','booking_id','name','customer_name','customer_mobile_number','paid_due_amount'])
+	for due in all_due:
+		due['paid_due_amount'] = int(due['paid_due_amount'])
+	for due in all_due:
+		due["project"] = frappe.db.get_value("Site Booking",{"serial" : due.serial},["project"])
+		due["block"] = frappe.db.get_value("Site Booking",{"serial" : due.serial},["block"])
+		due["site"] = frappe.db.get_value("Site Booking",{"serial" : due.serial},["site"])
+	return all_due 
 
 @frappe.whitelist()
 def delete_due(user_id):
