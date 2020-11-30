@@ -36,13 +36,13 @@ def get_customer_details(project,block,site):
 def make_entry(serial,customer_name,mobile_no,paid_amount):
 	
 	due = frappe.new_doc('Due Payment')
-	due.customer_name = customer_name
+	due.customer_name = frappe.db.get_value('Site Booking',{'serial' : serial},['customer_name'])
 	site_price = frappe.db.get_value('Site Booking',{'serial' : serial},['price'])
 	booking_no = frappe.db.get_value('Site Booking',{'serial': serial},['name'])
 	due.price = site_price
 	total = get_total(booking_no)
 	due.balance = (site_price - total) - float(paid_amount)
-	due.customer_mobile_number = mobile_no
+	due.customer_mobile_number = frappe.db.get_value('Site Booking',{'serial' : serial},['customer_mobile_number'])
 	due.booking_id = booking_no
 	due.serial = serial
 	due.paid_due_amount = paid_amount

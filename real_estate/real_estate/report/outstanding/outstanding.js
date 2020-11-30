@@ -74,7 +74,7 @@ frappe.query_reports["Outstanding"] = {
 		{
 			"fieldname":"block",
 			"label": __("Block"),
-			"fieldtype": "MultiSelectList",
+			"fieldtype": "Select",
 			
 			 on_change: () => {
 				 if (flag == true){
@@ -116,29 +116,10 @@ frappe.query_reports["Outstanding"] = {
 			
 			"fieldname":"sites",
 			"label": __("Sites"),
-			"fieldtype": "MultiSelectList",
+			"fieldtype": "Select",
 			"bold":1,
 
 		},
-		{
-			
-			"fieldname":"customer",
-			"label": __("Customer"),
-			"fieldtype": "Link",
-			"options":"Customer",
-			"bold":1,
-			on_load : () => {
-				var sites = frappe.query_report.get_filter('sites');
-				sites.df.options = null;
-				sites.refresh();
-				frm.set_value("project","");
-				frm.set_value("block","");
-				frm.set_value("site","");
-
-			}
-			
-
-		}
 		
 			
 	],

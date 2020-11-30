@@ -36,6 +36,7 @@
    "label": "Customer Name"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "customer_mobile_number",
    "fieldtype": "Data",
    "label": "Customer Mobile Number"
@@ -120,7 +121,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-11-18 00:31:21.959224",
+ "modified": "2020-11-30 12:40:07.273026",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Site Booking",

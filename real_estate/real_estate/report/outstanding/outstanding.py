@@ -3,6 +3,7 @@
 
 #from __future__ import unicode_literal
 import frappe
+from datetime import date
 
 def execute(filters=None):
 	details = []
@@ -18,51 +19,54 @@ def execute(filters=None):
 	
 def get_details(filters):
 	all_details = list(tuple())
-	for site in filters.sites:
-		site_record = frappe.db.get_all("Site Booking",{"project":filters.project,"site":site},["name","customer_name","customer_mobile_number","block"])
-		if(site_record):
-			due_record = frappe.db.get_all("Due Payment",{"booking_id": site_record[0]["name"],"docstatus":1},["paid_due_amount"])
-			for record in due_record:
-				details = []
-				details.append(site_record[0]["customer_name"])
-				details.append(site_record[0]["customer_mobile_number"])
-				details.append(filters.project)
-				details.append(site_record[0]["block"])
-				details.append(site)
-				details.append(site_record[0]["name"])
-				details.append(record["paid_due_amount"])
-				all_details.append(details)
-	return all_details
-
-def get_customer_details(filters):
-	all_details = list(tuple())
-	site_record =  frappe.db.get_all("Site Booking",{"customer_name":filters.customer.split("-")[0],"customer_mobile_number":filters.customer.split("-")[1]},["name"])
-	for site in site_record:
-		name_array = site["name"].split("-")
-		due_record =  frappe.db.get_all("Due Payment",{"booking_id":site["name"],"docstatus":1},["paid_due_amount"])
+	total = 0
+	price = 0
+	site_record = frappe.db.get_all("Site Booking",{"project":filters.project,"block":filters.block, "site":filters.sites},["serial","customer_name","customer_mobile_number", "block", "site", "price" ])
+	if(site_record):
+		price = site_record[0]["price"]
+		due_record = frappe.db.get_all("Due Payment",{"serial": site_record[0]["serial"],"docstatus":1},["name", "paid_due_amount", "creation"])
 		for record in due_record:
 			details = []
-			details.append(filters.customer.split("-")[0])
-			details.append(filters.customer.split("-")[1])
-			details.append(name_array[0])
-			details.append(name_array[1])
-			site_name = frappe.db.get_value("Site Booking",{"name" : str(site["name"])},["site"])
-			details.append(site_name)
-			details.append(site["name"])
+			details.append(site_record[0]["serial"])
+			details.append(site_record[0]["customer_name"])
+			details.append(filters.project)
+			details.append(site_record[0]["block"])
+			details.append(site_record[0]["site"])
 			details.append(record["paid_due_amount"])
+			details.append(record["name"])
+			details.append(record["creation"].date())
+			details.append(site_record[0]["customer_mobile_number"])
+			total = total + record["paid_due_amount"]
 			all_details.append(details)
+	details = []
+	all_details.append(details)
+	details = []
+	paid = total
+	balance = price - paid
+	details.append("")
+	details.append("<b>Price</b>")
+	details.append(price)
+	details.append("")
+	details.append("<b>Paid</b>")
+	details.append(paid)
+	details.append("")
+	details.append("<b>Balance</b>")
+	details.append(balance)
+	details.append("")
+	all_details.append(details)
 	return all_details
+
 def get_columns(filters):
 	columns = [
+		{
+			"label": ("Serial"),
+			"fieldname": "serial",
+			"width": 100
+		},
 		{
 			"label": ("Customer"),
 			"fieldname": "customer",
 			"width": 150
-		},
-		{
-			"label": ("Mobile"),
-			"fieldname": "mobile",
-			"width": 100
 		},
 		{
 			"label": ("Projects"),
@@ -80,14 +84,24 @@ def get_columns(filters):
 			"width": 120
 		},
 		{
-			"label": ("Booking Id"),
-			"fieldname": "booking_id",
-			"width": 250
-		},
-		{
 			"label": ("Due payment"),
 			"fieldname": "due_payment",
-			"width": 80
+			"width": 100
+		},
+		{
+			"label": ("Bill Number"),
+			"fieldname": "bill_number",
+			"width": 100
+		},
+		{
+			"label": ("Bill Date"),
+			"fieldname": "bill_date",
+			"width": 100
+		},
+		{
+			"label": ("Mobile"),
+			"fieldname": "mobile",
+			"width": 100
 		}
 	]
 	return columns
