@@ -7,7 +7,7 @@ from datetime import date, datetime
 
 def execute(filters=None):
 	columns, data = [], []
-	if filters.from_date and filters.to_date and filters.user:
+	if filters.from_date and filters.to_date:
 		columns = get_columns(filters)
 		data = get_data(filters)
 		return columns, data
@@ -19,6 +19,16 @@ def get_columns(filters):
 		{
 			"label": ("Serial"),
 			"fieldname": "serial",
+			"width": 100
+		},
+		{
+			"label": ("Bill Number"),
+			"fieldname": "bill_number",
+			"width": 100
+		},
+		{
+			"label": ("User"),
+			"fieldname": "user",
 			"width": 100
 		},
 		{
@@ -72,11 +82,13 @@ def get_data(filters):
 	end_date = datetime.strptime(filters.to_date,"%Y-%m-%d").date()
 	_fromdate = datetime.combine(start_date,start_time)
 	_todate = datetime.combine(end_date,end_time)
-	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["docstatus","=",2],["owner" ,'=', filters.user]], ['serial','customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on'])
+	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["docstatus","=",2],["owner" ,'=', filters.user]], ['serial', 'name', 'owner', 'customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on'])
 	for record in records:
 		row_details = []
 		customer = frappe.db.get_value('Customer',{'mobile_number': record.customer_mobile_number}, ['customer_name'])
 		row_details.append(record.serial)
+		row_details.append(record.name)
+		row_details.append(record.owner)
 		row_details.append(customer)
 		row_details.append(record.customer_mobile_number)
 		booking_detail = record.booking_id.split('-')

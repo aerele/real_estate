@@ -15,13 +15,6 @@ frappe.query_reports["Cancelled Payments"] = {
 			fieldtype: "Date",
 			default: frappe.datetime.now_date(true)
 		},
-		{
-			fieldname:"user",
-			label: __("User"),
-			fieldtype: "Link",
-			options: "User",
-
-		},
 
 
 	]
