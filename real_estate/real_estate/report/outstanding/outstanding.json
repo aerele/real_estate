@@ -1,5 +1,5 @@
 {
- "add_total_row": 1,
+ "add_total_row": 0,
  "columns": [],
  "creation": "2020-09-14 18:36:10.427339",
  "disable_prepared_report": 0,
@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2020-09-15 12:35:17.190201",
+ "modified": "2020-11-30 17:22:43.186721",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Outstanding",
