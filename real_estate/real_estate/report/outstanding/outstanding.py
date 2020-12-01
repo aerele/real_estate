@@ -7,14 +7,10 @@ from datetime import date
 
 def execute(filters=None):
 	details = []
-	if(filters.project and filters.block and filters.sites and not(filters.customer)):
+	if(filters.project and filters.block and filters.sites):
 		details = get_details(filters)
 		columns = get_columns(filters)
 		return columns, details
-	if(not filters.project and not filters.block and not filters.sites and filters.customer):
-		details = get_customer_details(filters)
-		columns = get_columns(filters)
-		return columns , details
 	return [],[]
 	
 def get_details(filters):

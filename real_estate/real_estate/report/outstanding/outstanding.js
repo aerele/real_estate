@@ -36,7 +36,10 @@ frappe.query_reports["Outstanding"] = {
 							flag = true;
 						}
 						else{
-							frappe.query_report.set_filter_value('block',r.message);
+						var block = frappe.query_report.get_filter('block');
+						block.df.options = r.message;
+						block.refresh();
+						frappe.query_report.set_filter_value('block',r.message);
 						var project = frappe.query_report.get_filter_value('project');
 						frappe.call({
 							method : 'real_estate.real_estate.doctype.site_booking.site_booking.get_sites_report',
@@ -46,8 +49,6 @@ frappe.query_reports["Outstanding"] = {
 							"block" : "None"
 							},
 							callback: function(r) {
-								console.log("upper hand")
-								console.log(r.message)
 								if(r.message) {
 									let status = r.message
 									let options = []
