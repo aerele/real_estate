@@ -10,11 +10,6 @@ def execute(filters=None):
 	if filters.from_date and filters.to_date:
 		columns = get_columns(filters)
 		data = get_data(filters)
-	
-	empty_row = []
-	for i in range(len(columns)):
-		empty_row.append('')
-	data.append(empty_row)
 	return columns, data
 
 
