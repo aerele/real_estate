@@ -83,6 +83,11 @@ def execute(filters=None):
 			"width": 90
 		}
 	]
+
+	empty_row = []
+	for i in range(len(columns)):
+		empty_row.append('')
+	data.append(empty_row)
 	return columns, data
 
 def get_data(filters):

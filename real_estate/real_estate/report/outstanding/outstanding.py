@@ -7,11 +7,16 @@ from datetime import date
 
 def execute(filters=None):
 	details = []
+	columns = []
 	if(filters.project and filters.block and filters.sites):
 		details = get_details(filters)
 		columns = get_columns(filters)
-		return columns, details
-	return [],[]
+		
+	empty_row = []
+	for i in range(len(columns)):
+		empty_row.append('')
+	details.append(empty_row)
+	return columns, details
 	
 def get_details(filters):
 	all_details = list(tuple())

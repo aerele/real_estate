@@ -6,6 +6,8 @@ import frappe
 from frappe import _, _dict
 
 def execute(filters=None):
+	columns = []
+	data = []
 	if (filters.project and filters.block):
 		details = get_status(filters)
 		data = details
@@ -31,9 +33,13 @@ def execute(filters=None):
 				"width": 80
 			}
 		]
-		return columns, data
-	return [], []
 	
+	empty_row = []
+	for i in range(len(columns)):
+		empty_row.append('')
+	data.append(empty_row)
+	return columns, data
+
 def get_status(filters):
 	all_details = list(tuple())
 	block = filters.block

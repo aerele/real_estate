@@ -6,20 +6,23 @@ import frappe
 from datetime import date, datetime
 
 def execute(filters=None):
+	columns = []
+	report_data = []
 	if filters.from_date and filters.to_date and  filters.project and filters.block and filters.sites:
 		report_data = get_data_with_site(filters)
 		columns = get_columns(filters)
-		return columns, report_data
 	elif filters.from_date and filters.to_date and filters.user:
 		report_data = get_data_with_user(filters)
 		columns = get_columns(filters)
-		return columns, report_data
 	elif filters.from_date and filters.to_date:
 		report_data = get_data(filters)
 		columns = get_columns(filters)
-		return columns, report_data
-	else:
-		return [],[]
+
+	empty_row = []
+	for i in range(len(columns)):
+		empty_row.append('')
+	report_data.append(empty_row)
+	return columns, report_data
 
 def get_data(filters):
 	start_time = datetime.min.time()
