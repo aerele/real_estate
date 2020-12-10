@@ -17,11 +17,6 @@ def execute(filters=None):
 	elif filters.from_date and filters.to_date:
 		report_data = get_data(filters)
 		columns = get_columns(filters)
-
-	empty_row = []
-	for i in range(len(columns)):
-		empty_row.append('')
-	report_data.append(empty_row)
 	return columns, report_data
 
 def get_data(filters):
@@ -31,7 +26,7 @@ def get_data(filters):
 	end_date = datetime.strptime(filters.to_date,"%Y-%m-%d").date()
 	_fromdate = datetime.combine(start_date,start_time)
 	_todate = datetime.combine(end_date,end_time)
-	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["docstatus","=",1]], ['serial', 'name', 'customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on', 'customer_name'])
+	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["docstatus","=",1]], ['serial', 'name', 'owner', 'customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on', 'customer_name'])
 	data = list(tuple())
 	for record in records:
 		row_details = []
@@ -46,10 +41,12 @@ def get_data(filters):
 		row_details.append(booking_detail[1])
 		site_name = frappe.db.get_value("Site Booking",{"name" : record.booking_id},["site"])
 		row_details.append(site_name)
-		row_details.append(record.booking_id)
+		row_details.append(record.owner)
 		row_details.append(record.paid_due_amount)
 		row_details.append(record.payment_made_on.date())
 		data.append(row_details)
+	empty_array = []
+	data.append(empty_array)
 	return data
 
 def get_data_with_site(filters):
@@ -63,7 +60,7 @@ def get_data_with_site(filters):
 	for site in filters.sites:
 		booking_id = frappe.db.get_value('Site Booking',{'project':filters.project , 'site':site },['name'])
 		if(booking_id):
-			records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],['booking_id','=',booking_id],["docstatus","=",1]], ["serial", 'name', 'customer_mobile_number', 'paid_due_amount', 'payment_made_on'])
+			records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],['booking_id','=',booking_id],["docstatus","=",1]], ["serial", 'name', 'owner', 'customer_mobile_number', 'paid_due_amount', 'payment_made_on'])
 			for record in records:
 				row_details = []
 				customer = frappe.db.get_value('Customer',{'mobile_number': record.customer_mobile_number}, ['customer_name'])
@@ -75,10 +72,12 @@ def get_data_with_site(filters):
 				block_name = frappe.db.get_value("Site Booking",{"name" : booking_id},["block"])
 				row_details.append(block_name)
 				row_details.append(site)
-				row_details.append(booking_id)
+				row_details.append(record.owner)
 				row_details.append(record.paid_due_amount)
 				row_details.append(record.payment_made_on.date())
 				data.append(row_details)
+	empty_array = []
+	data.append(empty_array)
 	return data
 
 def get_data_with_user(filters):
@@ -88,7 +87,7 @@ def get_data_with_user(filters):
 	end_date = datetime.strptime(filters.to_date,"%Y-%m-%d").date()
 	_fromdate = datetime.combine(start_date,start_time)
 	_todate = datetime.combine(end_date,end_time)
-	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["owner" ,'=', filters.user],["docstatus","=",1]] , ['customer_mobile_number', 'name', 'booking_id', 'paid_due_amount', 'payment_made_on', 'serial'])
+	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["owner" ,'=', filters.user],["docstatus","=",1]] , ['customer_mobile_number', 'name', 'owner', 'booking_id', 'paid_due_amount', 'payment_made_on', 'serial'])
 	data = list(tuple())
 	for record in records:
 		row_details = []
@@ -102,10 +101,12 @@ def get_data_with_user(filters):
 		row_details.append(booking_detail[1])
 		site_name = frappe.db.get_value("Site Booking",{"name" : record.booking_id},["site"])
 		row_details.append(site_name)
-		row_details.append(record.booking_id)
+		row_details.append(record.owner)
 		row_details.append(record.paid_due_amount)
 		row_details.append(record.payment_made_on.date())
 		data.append(row_details)
+	empty_array = []
+	data.append(empty_array)
 	return data
 
 def get_columns(filters):
@@ -146,9 +147,9 @@ def get_columns(filters):
 			"width": 100
 		},
 		{
-			"label": ("Bookind ID"),
-			"fieldname": "Booking_id",
-			"width": 250
+			"label": ("User"),
+			"fieldname": "user",
+			"width": 150
 		},
 		{
 			"label": ("Payment"),
