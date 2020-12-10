@@ -31,11 +31,12 @@ def get_data(filters):
 	end_date = datetime.strptime(filters.to_date,"%Y-%m-%d").date()
 	_fromdate = datetime.combine(start_date,start_time)
 	_todate = datetime.combine(end_date,end_time)
-	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["docstatus","=",1]], ['serial', 'name', 'customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on'])
+	records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],["docstatus","=",1]], ['serial', 'name', 'customer_mobile_number', 'booking_id', 'paid_due_amount', 'payment_made_on', 'customer_name'])
 	data = list(tuple())
 	for record in records:
 		row_details = []
-		customer = frappe.db.get_value('Customer',{'mobile_number': record.customer_mobile_number}, ['customer_name'])
+		if record.customer_name:
+			customer = record.customer_name
 		row_details.append(record.serial)
 		row_details.append(record.name)
 		row_details.append(customer)
