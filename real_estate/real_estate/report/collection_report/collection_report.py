@@ -43,8 +43,6 @@ def get_data(filters):
 		row_details.append(record.paid_due_amount)
 		row_details.append(record.payment_made_on.date())
 		data.append(row_details)
-	empty_array = []
-	data.append(empty_array)
 	return data
 
 def get_data_with_site(filters):
@@ -74,8 +72,6 @@ def get_data_with_site(filters):
 				row_details.append(record.paid_due_amount)
 				row_details.append(record.payment_made_on.date())
 				data.append(row_details)
-	empty_array = []
-	data.append(empty_array)
 	return data
 
 def get_data_with_user(filters):
@@ -102,8 +98,6 @@ def get_data_with_user(filters):
 		row_details.append(record.paid_due_amount)
 		row_details.append(record.payment_made_on.date())
 		data.append(row_details)
-	empty_array = []
-	data.append(empty_array)
 	return data
 
 def get_columns(filters):
