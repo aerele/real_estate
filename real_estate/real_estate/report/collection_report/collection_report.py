@@ -30,23 +30,19 @@ def get_data(filters):
 	data = list(tuple())
 	for record in records:
 		row_details = []
-		if record.customer_name:
-			customer = record.customer_name
+		customer = frappe.db.get_value('Site Booking',{'serial': record.serial}, ['customer_name'])
 		row_details.append(record.serial)
 		row_details.append(record.name)
 		row_details.append(customer)
 		row_details.append(record.customer_mobile_number)
-		booking_detail = record.booking_id.split('-')
+		booking_detail = frappe.db.get_value("Site Booking",{"name" : record.booking_id},["project", "block", "site"])
 		row_details.append(booking_detail[0])
 		row_details.append(booking_detail[1])
-		site_name = frappe.db.get_value("Site Booking",{"name" : record.booking_id},["site"])
-		row_details.append(site_name)
+		row_details.append(booking_detail[2])
 		row_details.append(record.owner)
 		row_details.append(record.paid_due_amount)
 		row_details.append(record.payment_made_on.date())
 		data.append(row_details)
-	empty_array = []
-	data.append(empty_array)
 	return data
 
 def get_data_with_site(filters):
@@ -63,21 +59,19 @@ def get_data_with_site(filters):
 			records = frappe.db.get_all('Due Payment',[['payment_made_on', '>=', _fromdate], ['payment_made_on', '<=', _todate],['booking_id','=',booking_id],["docstatus","=",1]], ["serial", 'name', 'owner', 'customer_mobile_number', 'paid_due_amount', 'payment_made_on'])
 			for record in records:
 				row_details = []
-				customer = frappe.db.get_value('Customer',{'mobile_number': record.customer_mobile_number}, ['customer_name'])
+				customer = frappe.db.get_value('Site Booking',{'serial': record.serial}, ['customer_name'])
 				row_details.append(record.serial)
 				row_details.append(record.name)
 				row_details.append(customer)
 				row_details.append(record.customer_mobile_number)
-				row_details.append(filters.project)
-				block_name = frappe.db.get_value("Site Booking",{"name" : booking_id},["block"])
-				row_details.append(block_name)
-				row_details.append(site)
+				booking_detail = frappe.db.get_value("Site Booking",{"name" : booking_id},["project", "block", "site"])
+				row_details.append(booking_detail[0])
+				row_details.append(booking_detail[1])
+				row_details.append(booking_detail[2])
 				row_details.append(record.owner)
 				row_details.append(record.paid_due_amount)
 				row_details.append(record.payment_made_on.date())
 				data.append(row_details)
-	empty_array = []
-	data.append(empty_array)
 	return data
 
 def get_data_with_user(filters):
@@ -91,22 +85,19 @@ def get_data_with_user(filters):
 	data = list(tuple())
 	for record in records:
 		row_details = []
-		customer=frappe.db.get_value('Customer',{'mobile_number': record.customer_mobile_number}, ['customer_name'])
+		customer = frappe.db.get_value('Site Booking',{'serial': record.serial}, ['customer_name'])
 		row_details.append(record.serial)
 		row_details.append(record.name)
 		row_details.append(customer)
 		row_details.append(record.customer_mobile_number)
-		booking_detail = record.booking_id.split('-')
+		booking_detail = frappe.db.get_value("Site Booking",{"serial" : record.serial},["project", "block", "site"])
 		row_details.append(booking_detail[0])
 		row_details.append(booking_detail[1])
-		site_name = frappe.db.get_value("Site Booking",{"name" : record.booking_id},["site"])
-		row_details.append(site_name)
+		row_details.append(booking_detail[2])
 		row_details.append(record.owner)
 		row_details.append(record.paid_due_amount)
 		row_details.append(record.payment_made_on.date())
 		data.append(row_details)
-	empty_array = []
-	data.append(empty_array)
 	return data
 
 def get_columns(filters):

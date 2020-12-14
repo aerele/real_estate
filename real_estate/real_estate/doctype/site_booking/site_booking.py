@@ -101,7 +101,6 @@ class SiteBooking(Document):
 @frappe.whitelist()
 def set_detail_to_app(site_name):
 	a = frappe.db.get_value('Site Booking',{'serial' : site_name },["project","block","site","customer_name","customer_mobile_number"])
-	print(a)
 	return a
 
 
