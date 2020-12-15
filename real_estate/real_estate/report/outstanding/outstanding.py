@@ -40,8 +40,6 @@ def get_details(filters):
 			total = total + record["paid_due_amount"]
 			all_details.append(details)
 	details = []
-	all_details.append(details)
-	details = []
 	paid = total
 	balance = price - paid
 	details.append("")
