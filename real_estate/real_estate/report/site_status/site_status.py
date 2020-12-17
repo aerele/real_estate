@@ -66,11 +66,6 @@ def execute(filters=None):
 			},
 			
 		]
-	
-	empty_row = []
-	for i in range(len(columns)):
-		empty_row.append('')
-	data.append(empty_row)
 	return columns, data
 
 def get_paid_amount(serial):
