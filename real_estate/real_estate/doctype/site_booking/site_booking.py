@@ -36,7 +36,7 @@ class SiteBooking(Document):
 			site.price = ""
 			site.status = "Open"
 			site.save()
-		# frappe.db.delete("Due Payment",{'serial' : self.serial})
+		frappe.db.delete("Due Payment",{'serial' : self.serial})
 
 	def validate(self):
 		if(self.starting_date and self.number_of_weeks):
