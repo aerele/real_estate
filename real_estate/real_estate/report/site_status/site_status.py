@@ -64,13 +64,14 @@ def execute(filters=None):
 				"fieldname": "balance",
 				"width": 100
 			},
+			{
+				"label": _("Percentage"),
+				"fieldname": "percent",
+				"width": 100
+			},
 			
 		]
 	
-	empty_row = []
-	for i in range(len(columns)):
-		empty_row.append('')
-	data.append(empty_row)
 	return columns, data
 
 def get_paid_amount(serial):
@@ -92,18 +93,20 @@ def get_status(filters):
 			details.append(block)
 			details.append(status["site_name"])
 			details.append(status["status"])
-			booking_id, serial , customer_name , price , paid, balance = "", "", "", "", "", ""
+			booking_id, serial , customer_name , price , paid, balance, percent = "", "", "", "", "", "",""
 			if status["status"] != "Open":
 				if frappe.db.exists("Site Booking",{"project":filters.project, "block":block,"site": status["site_name"]},["serial"]):
 					site_booking_details = frappe.db.get_value("Site Booking",{"project":filters.project, "block":block,"site": status["site_name"]},["name", "serial", "customer_name", "price"])
 					booking_id, serial, customer_name, price = site_booking_details[0], site_booking_details[1], site_booking_details[2], site_booking_details[3]
 					paid = get_paid_amount(serial)
 					balance =  price - paid
+					percent = round(balance/price * 100,2)
 			details.append(booking_id)
 			details.append(serial)
 			details.append(customer_name)
 			details.append(price)
 			details.append(paid)
 			details.append(balance)
+			details.append(percent)
 			all_details.append(details)
 	return all_details
