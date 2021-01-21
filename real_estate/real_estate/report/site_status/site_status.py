@@ -71,7 +71,6 @@ def execute(filters=None):
 			},
 			
 		]
-	
 	return columns, data
 
 def get_paid_amount(serial):
@@ -95,7 +94,7 @@ def get_status(filters):
 			details.append(status["status"])
 			booking_id, serial , customer_name , price , paid, balance, percent = "", "", "", "", "", "",""
 			if status["status"] != "Open":
-				if frappe.db.exists("Site Booking",{"project":filters.project, "block":block,"site": status["site_name"]},["serial"]):
+				if frappe.db.exists("Site Booking",{"project":filters.project, "block":block,"site": status["site_name"], "docstatus": 1},["serial"]):
 					site_booking_details = frappe.db.get_value("Site Booking",{"project":filters.project, "block":block,"site": status["site_name"]},["name", "serial", "customer_name", "price"])
 					booking_id, serial, customer_name, price = site_booking_details[0], site_booking_details[1], site_booking_details[2], site_booking_details[3]
 					paid = get_paid_amount(serial)
