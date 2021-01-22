@@ -70,8 +70,13 @@ def delete_due(user_id):
 	user_id = str(user_id)
 	currect_record =  frappe.get_doc("Due Payment",{'name':str(user_id)})
 	currect_record.cancel()
-	a = frappe.db.count('Due Payment')
 	return 'success'
+
+@frappe.whitelist()
+def validate(serial,customer_name,mobile_no,project,site,block):
+	if frappe.db.exists("Site Booking",{"serial":serial,"customer_name":customer_name,"project":project,"block":block,"site":site,"customer_mobile_number":mobile_no}): 
+		return True
+	return False
 
 @frappe.whitelist()
 def user_validation():
