@@ -31,19 +31,22 @@ class Project(Document):
 						site.save()
 		else:
 			if len(present_sites) == 0:
-					for site_no in range(1, self.number_of_sites + 1):
-						site = frappe.new_doc('Sites')
-						site.real_estate_project = self.project_name
-						site.block_name = "None"
-						site_name_ = str(site_no)
-						if(self.number_of_sites  > 9 and self.number_of_sites  < 100):
-							site_name_ = str(site_no).zfill(2)
-						if(self.number_of_sites  > 99 and self.number_of_sites  < 1000):
-							site_name_ = str(site_no).zfill(3)
-						if(self.number_of_sites  > 9999 and self.number_of_sites  < 10000):
-							site_name_ = str(site_no).zfill(4)
-						site.site_name = site_name_
-						site.status = 'Open'
-						site.save()
+				start_from = 1
+				if self.starting_number_of_sites:
+					start_from = self.starting_number_of_sites
+				for site_no in range(start_from, self.number_of_sites + start_from):
+					site = frappe.new_doc('Sites')
+					site.real_estate_project = self.project_name
+					site.block_name = "None"
+					site_name_ = str(site_no)
+					if(self.number_of_sites  > 9 and self.number_of_sites  < 100):
+						site_name_ = str(site_no).zfill(2)
+					if(self.number_of_sites  > 99 and self.number_of_sites  < 1000):
+						site_name_ = str(site_no).zfill(3)
+					if(self.number_of_sites  > 9999 and self.number_of_sites  < 10000):
+						site_name_ = str(site_no).zfill(4)
+					site.site_name = site_name_
+					site.status = 'Open'
+					site.save()
 
 

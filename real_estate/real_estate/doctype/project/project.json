@@ -8,6 +8,7 @@
  "field_order": [
   "project_name",
   "enable_blocks",
+  "starting_number_of_sites",
   "number_of_sites",
   "block_record",
   "site_serial"
@@ -46,10 +47,17 @@
    "fieldtype": "Table",
    "label": "Block Record",
    "options": "Blocks"
+  },
+  {
+   "depends_on": "eval:doc.enable_blocks==0",
+   "fieldname": "starting_number_of_sites",
+   "fieldtype": "Int",
+   "label": "Starting Number Of Sites"
   }
  ],
+ "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-20 10:47:36.185192",
+ "modified": "2021-04-28 10:55:19.723301",
  "modified_by": "Administrator",
  "module": "Real Estate",
  "name": "Project",
